@@ -7,7 +7,7 @@ export const Home = () => {
 		<div>
 			<Header pagename="Home" />
 			<h1>Home</h1>
-			<p> if we see this, master protection is broken</p>
+			<p> Testing again</p>
 		</div>
 	);
 };
