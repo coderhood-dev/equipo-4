@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from './Header';
 
-export const Home = () => {
+const Home = () => {
   return (
     <div>
       <Header pagename="Home" />
@@ -10,3 +10,4 @@ export const Home = () => {
     </div>
   );
 };
+export default Home;
