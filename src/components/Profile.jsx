@@ -1,9 +1,9 @@
 import React from 'react';
-import Header from './Header'
+import Header from './Header';
 
 export const Profile = () => (
   <div>
-    <Header pagename="Profile"/>
+    <Header pagename="Profile" />
     <h1> Profile </h1>
   </div>
 );
