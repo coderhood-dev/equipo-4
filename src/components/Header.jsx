@@ -9,7 +9,10 @@ import {
 	MenuItem,
 	Heading,
 	Button,
+	Image,
 } from "@chakra-ui/react";
+
+import ico-menu from "../img/icon-menu.svg"
 
 const Header = (props) => (
 	<Flex
@@ -23,19 +26,34 @@ const Header = (props) => (
 		alignItems="center"
 	>
 		<Heading as="h1">{props.pagename}</Heading>
+		<Flex>
+		<Button
+		bg="#065666" 
+		color="#C4F1F9"
+		_hover={{ bg: "#0987A0" }}
+		_expanded={{ bg: "#0987A0" }}
+		variant="ghost"
+		borderRadius="8px"
+		size="lg"
+		>
+		<Link to="/profile">
+			Log in
+		</ Link>
+		</Button>
 		<Menu>
-			<Flex ml="2rem">
+			<Flex ml="1rem" flexDir="row">
 				<MenuButton
 					as={Button}
 					color="#C4F1F9"
 					_hover={{ bg: "#0987A0" }}
 					_expanded={{ bg: "#0987A0" }}
 					variant="ghost"
-					w="2rem"
+					// w="2rem"
 					borderRadius="8px"
 					size="lg"
 				>
-					Menu
+					<Image src=""/>
+					Home
 				</MenuButton>
 				<MenuList bg="#065666" _expanded={{ bg: "#0987A0" }}>
 					<Link to="/">
@@ -50,6 +68,7 @@ const Header = (props) => (
 				</MenuList>
 			</Flex>
 		</Menu>
+		</Flex>
 	</Flex>
 );
 
