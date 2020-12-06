@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import { Profile } from './Profile';
-import { Home } from './Home';
-import { About } from './About';
+import Profile from './Profile';
+import Home from './Home';
+import About from './About';
 
 const App = () => (
   <Router>
