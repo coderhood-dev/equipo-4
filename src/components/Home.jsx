@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { Flex, Box, Button, Heading } from "@chakra-ui/react";
+import React  from "react";
 import Header from "./Header";
 
 export const Home = () => {

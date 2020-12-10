@@ -12,7 +12,7 @@ import {
 	Image,
 } from "@chakra-ui/react";
 
-import ico-menu from "../img/icon-menu.svg"
+
 
 const Header = (props) => (
 	<Flex
@@ -36,8 +36,8 @@ const Header = (props) => (
 		borderRadius="8px"
 		size="lg"
 		>
-		<Link to="/profile">
-			Log in
+		<Link to="/signup">
+			SingUp
 		</ Link>
 		</Button>
 		<Menu>

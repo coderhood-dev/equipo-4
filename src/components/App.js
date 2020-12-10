@@ -7,11 +7,15 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link
+    
   } from "react-router-dom";
+import SignIn from './SignIn';
+import SignUp from './SignUp';
+import Layout from  './Layout';
 
 const App = ()  =>(
     <Router>
+      <Layout>
       <Switch>
         <Route path="/about">
           <About />
@@ -19,10 +23,17 @@ const App = ()  =>(
         <Route path="/profile">
           <Profile />
         </Route>
+        <Route path="/signin">
+          <SignIn />
+        </Route>
+        <Route path="/signup">
+          <SignUp />
+        </Route>
         <Route exact path="/">
           <Home />
         </Route>
       </Switch>
+      </Layout>
   </Router>
     ); 
 
