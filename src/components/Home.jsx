@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from './Header';
-import SearchBox3 from './SearchBox3';
+import SearchBoxAdv from './SearchBoxAdv';
 
 const Home = () => {
   return (
@@ -8,7 +8,7 @@ const Home = () => {
       <Header pagename="Home" />
       <h1>Home</h1>
       <p> Testing again, and again</p>
-      <SearchBox3 />
+      <SearchBoxAdv />
     </div>
   );
 };
