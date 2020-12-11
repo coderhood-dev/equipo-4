@@ -56,8 +56,8 @@ function SignUp () {
         >
         <Text mb="2rem" color="#065666" >Welcome :D</Text>
         {/* <Heading mb="2rem" mt="2rem">SignIn</Heading> */}
-        <Input mb="1rem" placeholder="Name" onChange={handlePasswordChange} bg="white" />
-        <Input mb="1rem" placeholder="Lastname" onChange={handlePasswordChange} bg="white" />
+        <Input mb="1rem" placeholder="First name" onChange={handlePasswordChange} bg="white" />
+        <Input mb="1rem" placeholder="Last name" onChange={handlePasswordChange} bg="white" />
         <Input mb="1rem" placeholder="Email" onChange={handleEmailChange} bg="white"/>
         <Input mb="1rem" placeholder="Password" onChange={handlePasswordChange} bg="white" />
         <Button bg="#065666" mt="20px" color="white" _hover={{bg:"#0987A0"}} type="submit"
