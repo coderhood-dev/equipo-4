@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import {
   Box,
   Input,
@@ -56,13 +56,12 @@ function SearchFieldCollapse() {
   ) {
     const [quick, advanced] = APIdata;
     const [query, setQuery] = useState('');
-    // const [queryType, setQueryType] = useState(quick);
-    const queryType = quick;
+    const [queryType, setQueryType] = useState(quick);
+    // const queryType = quick;
 
     const SearchQuery = () => {
       console.log(queryType);
       console.log(query);
-      console.log(advanced);
     };
 
     const handleChange = (e) => {
@@ -71,13 +70,13 @@ function SearchFieldCollapse() {
 
     const { isOpen, onToggle } = useDisclosure();
 
-    const handleExpansion = () => {
+    useEffect(() => {
       if (isOpen) {
-        console.log('open');
+        setQueryType(advanced);
       } else {
-        console.log('closed');
+        setQueryType(quick);
       }
-    };
+    }, [isOpen]);
 
     return (
       <Box>
@@ -102,7 +101,7 @@ function SearchFieldCollapse() {
 
         <>
           <Button onClick={onToggle}>Advanced Search</Button>
-          <Collapse in={isOpen} animateOpacity onChange={handleExpansion()}>
+          <Collapse in={isOpen} animateOpacity>
             <Box
               p="40px"
               color="white"
