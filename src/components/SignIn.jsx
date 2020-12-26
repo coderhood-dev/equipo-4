@@ -1,20 +1,38 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Flex, Button, Input, Heading, Text } from '@chakra-ui/react';
+import useAuth from '../hooks/useAuth';
+import UserContext from '../context/user';
 
 import Header from './Header';
 
 function SignIn() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-
+  const [error, setError] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
+  const setUser = React.useContext(UserContext);
   const history = useHistory();
+  const { signin } = useAuth();
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setError(null);
+    setLoading(true);
 
-    console.log('signin:', email, password);
-    history.push('/');
+    signin(email, password)
+      .then((user) => {
+        setError(null);
+        setLoading(false);
+
+        setUser(user);
+
+        history.push('/');
+      })
+      .catch((e) => {
+        setError(e);
+        setLoading(false);
+      });
   };
 
   const handleSignUp = (event) => {
@@ -51,7 +69,6 @@ function SignIn() {
           <Text mb="2rem" color="#065666">
             Good to see you again :D
           </Text>
-          {/* <Heading mb="2rem" mt="2rem">SignIn</Heading> */}
           <Input
             mb="1rem"
             placeholder="Email"
@@ -64,6 +81,7 @@ function SignIn() {
             onChange={handlePasswordChange}
             bg="white"
           />
+          {error ? <Text color="red.400">{error}</Text> : null}
           <Button
             bg="#065666"
             mt="20px"
@@ -71,6 +89,8 @@ function SignIn() {
             _hover={{ bg: '#0987A0' }}
             type="submit"
             boxShadow="1px 1px 1px 1px #2b3f3f"
+            disabled={loading}
+            isLoading={loading}
           >
             SignIn
           </Button>

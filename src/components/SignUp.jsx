@@ -1,26 +1,56 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Flex, Heading, Text, Input, Button } from '@chakra-ui/react';
+import useAuth from '../hooks/useAuth';
 import Header from './Header';
 
 function SignUp() {
+  const [firstName, setFirstName] = React.useState('');
+  const [lastName, setLastName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [errors, setErrors] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
 
   const history = useHistory();
 
+  const { signup } = useAuth();
+
   const handleSubmit = (event) => {
     event.preventDefault();
+    setErrors([]);
+    setLoading(true);
 
-    console.log('signin:', email, password);
-    history.push('/');
+    const user = {
+      firstName,
+      lastName,
+      email,
+      password,
+    };
+
+    signup(user)
+      .then(() => {
+        setErrors([]);
+        setLoading(false);
+
+        history.push('/signin');
+      })
+      .catch((e) => {
+        setErrors(e);
+        setLoading(false);
+      });
   };
 
   const handleSignIn = (event) => {
     event.preventDefault();
     history.push('/signin');
   };
-
+  const handleFirstNameChange = (event) => {
+    setFirstName(event.target.value);
+  };
+  const handleLastNameChange = (event) => {
+    setLastName(event.target.value);
+  };
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
@@ -51,17 +81,16 @@ function SignUp() {
           <Text mb="2rem" color="#065666">
             Welcome :D
           </Text>
-          {/* <Heading mb="2rem" mt="2rem">SignIn</Heading> */}
           <Input
             mb="1rem"
             placeholder="First name"
-            onChange={handlePasswordChange}
+            onChange={handleFirstNameChange}
             bg="white"
           />
           <Input
             mb="1rem"
             placeholder="Last name"
-            onChange={handlePasswordChange}
+            onChange={handleLastNameChange}
             bg="white"
           />
           <Input
@@ -76,6 +105,21 @@ function SignUp() {
             onChange={handlePasswordChange}
             bg="white"
           />
+          {errors.map((error, i) => (
+            <Text
+              key={i.id}
+              color="white"
+              bg="red.400"
+              w="200px"
+              textAlign="center"
+              borderRadius="8px"
+              borderBottom="1px solid #942c2c"
+              boxShadow="1px 1px 1px 1px rgba(0,0,0, 0.3)"
+              m="5px"
+            >
+              {error}
+            </Text>
+          ))}
           <Button
             bg="#065666"
             mt="20px"
@@ -83,6 +127,9 @@ function SignUp() {
             _hover={{ bg: '#0987A0' }}
             type="submit"
             boxShadow="1px 1px 1px 1px #2b3f3f"
+            onSubmit={handleSubmit}
+            disabled={loading}
+            isLoading={loading}
           >
             SignUp
           </Button>
