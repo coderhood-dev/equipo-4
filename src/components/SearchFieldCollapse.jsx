@@ -55,26 +55,32 @@ function SearchFieldCollapse() {
     advSearchIntolerances
   ) {
     const [quick, advanced] = APIdata;
-    const [query, setQuery] = useState('');
-    const [queryType, setQueryType] = useState(quick);
-    // const queryType = quick;
+    const [userQuery, setUserQuery] = useState({ queryType: quick, query: '' });
 
-    const SearchQuery = () => {
-      console.log(queryType);
-      console.log(query);
+    const handleStringChange = (e) => {
+      setUserQuery({
+        ...userQuery,
+        [e.target.id]: e.target.value,
+      });
+      // TODO: setQuery(destructure query object, add e.target.id: e.target.value)
+      // onChange call handleChange for each advanced field
     };
 
-    const handleChange = (e) => {
-      setQuery(e.target.value);
+    const SearchQuery = () => {
+      // console.log(queryType);
+      console.log(userQuery);
+      // TODO: parse user inputs and API URL into an object, then use .stringifyUrl (query-string library)
+      // on said object to obtain our search URL to be fed to spoonacular API (react-query)
+      //
     };
 
     const { isOpen, onToggle } = useDisclosure();
 
     useEffect(() => {
       if (isOpen) {
-        setQueryType(advanced);
+        setUserQuery({ ...userQuery, queryType: advanced });
       } else {
-        setQueryType(quick);
+        setUserQuery({ ...userQuery, queryType: quick });
       }
     }, [isOpen]);
 
@@ -84,14 +90,14 @@ function SearchFieldCollapse() {
           <InputGroup size="md">
             <Input
               pr="4.5rem"
-              placeholder={`${queryType.type}`}
-              id={`searchBy${queryType.type}`}
-              value={query}
-              onChange={handleChange}
+              placeholder={`${userQuery.queryType.type}`}
+              id="query"
+              value={userQuery.query}
+              onChange={handleStringChange}
             />
             <InputRightElement>
               <IconButton
-                aria-label={`${queryType.type}`}
+                aria-label={`${userQuery.queryType.type}`}
                 icon={<SearchIcon />}
                 onClick={() => SearchQuery()}
               />
