@@ -10,7 +10,7 @@ import {
   NumberDecrementStepper,
 } from '@chakra-ui/react';
 
-function RangesInput({ list, category }) {
+function RangesInput({ list, category, handleStringChange }) {
   return (
     <Box>
       <h2>{category}</h2>
@@ -20,7 +20,7 @@ function RangesInput({ list, category }) {
           id={id}
           label={label}
           onChange={(e) => {
-            return console.log({ [e.target.id]: e.target.value });
+            handleStringChange(e);
           }}
         >
           <FormLabel>{label}</FormLabel>

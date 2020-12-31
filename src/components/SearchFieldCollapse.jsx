@@ -13,8 +13,6 @@ import { SearchIcon } from '@chakra-ui/icons';
 import CheckboxInput from './CheckboxInput';
 import RangesInput from './RangesInput';
 
-// 2. Create an array of data
-
 function SearchFieldCollapse() {
   const APIlist = [
     {
@@ -126,6 +124,8 @@ function SearchFieldCollapse() {
               <RangesInput
                 list={advSearchRanges}
                 category="Nutritional Ranges"
+                userQuery={userQuery}
+                handleStringChange={handleStringChange}
               />
             </Box>
           </Collapse>
