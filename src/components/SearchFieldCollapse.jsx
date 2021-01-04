@@ -12,6 +12,7 @@ import {
 import { SearchIcon } from '@chakra-ui/icons';
 import CheckboxInput from './CheckboxInput';
 import RangesInput from './RangesInput';
+import RadioInput from './RadioInput';
 
 function SearchFieldCollapse() {
   const APIlist = [
@@ -53,7 +54,10 @@ function SearchFieldCollapse() {
     advSearchIntolerances
   ) {
     const [quick, advanced] = APIdata;
-    const [userQuery, setUserQuery] = useState({ queryType: quick, query: '' });
+    const [userQuery, setUserQuery] = useState({
+      queryType: quick,
+      query: '',
+    });
 
     const handleStringChange = (e) => {
       setUserQuery({
@@ -62,6 +66,20 @@ function SearchFieldCollapse() {
       });
       // TODO: setQuery(destructure query object, add e.target.id: e.target.value)
       // onChange call handleChange for each advanced field
+    };
+
+    // const handleCheckboxChange = (e) => {
+    //   setUserQuery({
+    //     ...userQuery,
+    //     intolerances: e,
+    //   });
+    // };
+
+    const handleChange = (e, category) => {
+      setUserQuery({
+        ...userQuery,
+        [category]: e,
+      });
     };
 
     const SearchQuery = () => {
@@ -114,11 +132,17 @@ function SearchFieldCollapse() {
               rounded="md"
               shadow="md"
             >
-              <CheckboxInput list={advSearchDiets} category="Diets" />
+              <RadioInput
+                list={advSearchDiets}
+                category="Diets"
+                handleCheckboxChange={(e) => handleChange(e, 'diets')}
+              />
 
               <CheckboxInput
                 list={advSearchIntolerances}
                 category="Intolerances"
+                handleCheckboxChange={(e) => handleChange(e, 'intolerances')}
+                value={userQuery.intolerances}
               />
 
               <RangesInput
