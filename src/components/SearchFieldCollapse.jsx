@@ -10,19 +10,22 @@ import {
   Button,
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
+import queryString from 'query-string';
 import CheckboxInput from './CheckboxInput';
 import RangesInput from './RangesInput';
 import RadioInput from './RadioInput';
 
-function SearchFieldCollapse() {
+function SearchFieldCollapse({ handleConditionalRender }) {
   const APIlist = [
     {
       type: 'Quick Search',
-      URL: 'quick-search API',
+      URL: 'https://api.spoonacular.com/recipes/complexSearch',
+      apiKey: '5877b2159f654d72aa4999a11eb3634d',
     },
     {
       type: 'Advanced Search',
-      URL: 'advanced-search API',
+      URL: 'https://api.spoonacular.com/recipes/complexSearch',
+      apiKey: '5877b2159f654d72aa4999a11eb3634d',
     },
   ];
 
@@ -36,6 +39,7 @@ function SearchFieldCollapse() {
   ];
 
   const advSearchDietsList = [
+    { id: 'any', label: 'Any' },
     { id: 'vegan', label: 'Vegan' },
     { id: 'ketogenic', label: 'Keto' },
     { id: 'paleo', label: 'Paleo' },
@@ -54,8 +58,8 @@ function SearchFieldCollapse() {
     advSearchIntolerances
   ) {
     const [quick, advanced] = APIdata;
+    const [queryType, setQueryType] = useState(quick);
     const [userQuery, setUserQuery] = useState({
-      queryType: quick,
       query: '',
     });
 
@@ -64,16 +68,7 @@ function SearchFieldCollapse() {
         ...userQuery,
         [e.target.id]: e.target.value,
       });
-      // TODO: setQuery(destructure query object, add e.target.id: e.target.value)
-      // onChange call handleChange for each advanced field
     };
-
-    // const handleCheckboxChange = (e) => {
-    //   setUserQuery({
-    //     ...userQuery,
-    //     intolerances: e,
-    //   });
-    // };
 
     const handleChange = (e, category) => {
       setUserQuery({
@@ -83,8 +78,19 @@ function SearchFieldCollapse() {
     };
 
     const SearchQuery = () => {
-      // console.log(queryType);
-      console.log(userQuery);
+      const queryURL = queryString.stringifyUrl(
+        {
+          url: queryType.URL,
+          query: { ...userQuery, apiKey: queryType.apiKey },
+        },
+        {
+          arrayFormat: 'comma',
+          skipEmptyString: true,
+        }
+      );
+      console.log(queryURL);
+      handleConditionalRender(queryURL);
+
       // TODO: parse user inputs and API URL into an object, then use .stringifyUrl (query-string library)
       // on said object to obtain our search URL to be fed to spoonacular API (react-query)
       //
@@ -94,9 +100,9 @@ function SearchFieldCollapse() {
 
     useEffect(() => {
       if (isOpen) {
-        setUserQuery({ ...userQuery, queryType: advanced });
+        setQueryType(advanced);
       } else {
-        setUserQuery({ ...userQuery, queryType: quick });
+        setQueryType(quick);
       }
     }, [isOpen]);
 
@@ -106,14 +112,14 @@ function SearchFieldCollapse() {
           <InputGroup size="md">
             <Input
               pr="4.5rem"
-              placeholder={`${userQuery.queryType.type}`}
+              placeholder={`${queryType.type}`}
               id="query"
               value={userQuery.query}
               onChange={handleStringChange}
             />
             <InputRightElement>
               <IconButton
-                aria-label={`${userQuery.queryType.type}`}
+                aria-label={`${queryType.type}`}
                 icon={<SearchIcon />}
                 onClick={() => SearchQuery()}
               />
