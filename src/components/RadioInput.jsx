@@ -5,7 +5,7 @@ function RadioInput({ list, category, handleCheckboxChange }) {
   return (
     <Box>
       <h2>{category}</h2>
-      <RadioGroup colorScheme="green" onChange={(e) => handleCheckboxChange(e)}>
+      <RadioGroup colorScheme="green" onChange={handleCheckboxChange}>
         {list.map((element) => (
           <Radio key={element.label} id={element.id} value={element.id}>
             {element.label}

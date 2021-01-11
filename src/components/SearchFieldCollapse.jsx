@@ -90,10 +90,6 @@ function SearchFieldCollapse({ handleConditionalRender }) {
       );
       console.log(queryURL);
       handleConditionalRender(queryURL);
-
-      // TODO: parse user inputs and API URL into an object, then use .stringifyUrl (query-string library)
-      // on said object to obtain our search URL to be fed to spoonacular API (react-query)
-      //
     };
 
     const { isOpen, onToggle } = useDisclosure();
@@ -140,8 +136,8 @@ function SearchFieldCollapse({ handleConditionalRender }) {
             >
               <RadioInput
                 list={advSearchDiets}
-                category="Diets"
-                handleCheckboxChange={(e) => handleChange(e, 'diets')}
+                category="Diet"
+                handleCheckboxChange={(e) => handleChange(e, 'diet')}
               />
 
               <CheckboxInput

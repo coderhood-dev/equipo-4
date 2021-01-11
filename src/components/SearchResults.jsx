@@ -1,10 +1,13 @@
+import { Box } from '@chakra-ui/react';
 import React from 'react';
-
 import { useQuery } from 'react-query';
 
+import CardList from './CardList';
+
 function SearchResults({ queryURL }) {
-  const { isLoading, error, data, isFetching } = useQuery('foodData', () =>
-    fetch(queryURL).then((res) => res.json())
+  const { isLoading, error, data, isFetching } = useQuery(
+    ['foodData', queryURL],
+    () => fetch(queryURL).then((res) => res.json())
   );
 
   if (isLoading) return 'Loading...';
@@ -12,14 +15,10 @@ function SearchResults({ queryURL }) {
   if (error) return `An error has occurred: ${error.message}`;
 
   return (
-    <div>
-      <ul>
-        {data.results.map((element) => (
-          <li key={element.id}>{element.title}</li>
-        ))}
-      </ul>
-      <div>{isFetching ? 'Updating...' : ''}</div>
-    </div>
+    <Box>
+      <CardList items={data.results} />
+      <Box>{isFetching ? 'Updating...' : ''}</Box>
+    </Box>
   );
 }
 

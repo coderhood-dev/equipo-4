@@ -5,10 +5,7 @@ function CheckboxInput({ list, category, handleCheckboxChange }) {
   return (
     <Box>
       <h2>{category}</h2>
-      <CheckboxGroup
-        colorScheme="green"
-        onChange={(e) => handleCheckboxChange(e)}
-      >
+      <CheckboxGroup colorScheme="green" onChange={handleCheckboxChange}>
         {list.map((element) => (
           <Checkbox key={element.label} id={element.id} value={element.id}>
             {element.label}
