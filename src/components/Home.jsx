@@ -20,7 +20,7 @@ const Home = () => {
       {queryURL !== '' ? (
         <SearchResults queryURL={queryURL} />
       ) : (
-        <Box>Putoelquelee</Box>
+        <Box>vercel test</Box>
       )}
     </div>
   );
