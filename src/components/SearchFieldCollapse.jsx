@@ -20,12 +20,12 @@ function SearchFieldCollapse({ handleConditionalRender }) {
     {
       type: 'Quick Search',
       URL: 'https://api.spoonacular.com/recipes/complexSearch',
-      apiKey: '5877b2159f654d72aa4999a11eb3634d',
+      apiKey: process.env.REACT_APP_QUICKSEARCH_KEY,
     },
     {
       type: 'Advanced Search',
       URL: 'https://api.spoonacular.com/recipes/complexSearch',
-      apiKey: '5877b2159f654d72aa4999a11eb3634d',
+      apiKey: process.env.REACT_APP_ADVANCEDSEARCH_KEY,
     },
   ];
 
