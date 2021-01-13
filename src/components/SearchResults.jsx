@@ -5,19 +5,25 @@ import { useQuery } from 'react-query';
 import CardList from './CardList';
 
 function SearchResults({ queryURL }) {
-  const { isLoading, error, data, isFetching } = useQuery(
+  const { isLoading, error, data } = useQuery(
     ['foodData', queryURL],
-    () => fetch(queryURL).then((res) => res.json())
+    async () =>
+      fetch(queryURL).then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error(error.message);
+      })
   );
 
   if (isLoading) return 'Loading...';
 
-  if (error) return `An error has occurred: ${error.message}`;
-
+  if (error) {
+    return `An error has occurred: ${error.message}`;
+  }
   return (
     <Box>
       <CardList items={data.results} />
-      <Box>{isFetching ? 'Updating...' : ''}</Box>
     </Box>
   );
 }
