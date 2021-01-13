@@ -9,10 +9,10 @@ function SearchResults({ queryURL }) {
     ['foodData', queryURL],
     async () =>
       fetch(queryURL).then((response) => {
-        if (response.ok) {
-          return response.json();
+        if (!response.ok) {
+          throw Error(response.status);
         }
-        throw new Error(error.message);
+        return response.json();
       }),
     { refetchOnWindowFocus: false }
   );
@@ -20,6 +20,7 @@ function SearchResults({ queryURL }) {
   if (isLoading) return 'Loading...';
 
   if (error) {
+    console.log(error);
     return `An error has occurred: ${error.message}`;
   }
   return (
