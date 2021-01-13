@@ -24,9 +24,7 @@ function CardItem({ item }) {
 function CardList({ items }) {
   return (
     <SimpleGrid minChildWidth="320px" spacing="5" alignContent="center">
-      {items && items.map((item) => (
-        <CardItem item={item} key={item.id} />
-      ))}
+      {items && items.map((item) => <CardItem item={item} key={item.id} />)}
     </SimpleGrid>
   );
 }
