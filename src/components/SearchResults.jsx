@@ -13,7 +13,8 @@ function SearchResults({ queryURL }) {
           return response.json();
         }
         throw new Error(error.message);
-      })
+      }),
+    { refetchOnWindowFocus: false }
   );
 
   if (isLoading) return 'Loading...';
