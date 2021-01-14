@@ -7,13 +7,18 @@ import CardList from './CardList';
 function SearchResults({ queryURL }) {
   const { isLoading, error, data } = useQuery(
     ['foodData', queryURL],
-    async () =>
-      fetch(queryURL).then((response) => {
-        if (!response.ok) {
-          throw Error(response.status);
+    async () => {
+      try {
+        const response = await fetch(queryURL);
+        if (response.ok) {
+          return response.json();
         }
-        return response.json();
-      }),
+        throw Error({ status: response.status, message: response.statusText });
+      } catch (e) {
+        console.log('ERROR', { e });
+        throw Error(e);
+      }
+    },
     { refetchOnWindowFocus: false }
   );
 
@@ -21,7 +26,7 @@ function SearchResults({ queryURL }) {
 
   if (error) {
     console.log(error);
-    return `An error has occurred: ${error.message}`;
+    return `An error has occurred: ${error}`;
   }
   return (
     <Box>
