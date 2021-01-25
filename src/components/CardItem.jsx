@@ -11,6 +11,7 @@ import {
   Image,
   Box,
   Flex,
+  ModalBody,
 } from '@chakra-ui/react';
 import ItemRecipe from './ItemRecipe';
 
@@ -36,13 +37,18 @@ function CardItem({ item }) {
         </Box>
       </Flex>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        size="full"
+        scrollBehavior="inside"
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalCloseButton />
-          <Box>
+          <ModalBody>
             <ItemRecipe item={item} />
-          </Box>
+          </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close

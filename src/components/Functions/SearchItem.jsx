@@ -1,9 +1,6 @@
-import { Text, ModalHeader, ModalBody, Image } from '@chakra-ui/react';
-import React from 'react';
 import { useQuery } from 'react-query';
-import DOMPurify from 'dompurify';
 
-function ItemRecipe({ item }) {
+function SearchItem(item) {
   const queryURL = `https://api.spoonacular.com/recipes/${item.id}/information?apiKey=${process.env.REACT_APP_ADVANCEDSEARCH_KEY}&includeNutrition=true`;
   const { isLoading, error, data } = useQuery(
     ['recipeData', queryURL],
@@ -22,22 +19,7 @@ function ItemRecipe({ item }) {
   if (error) {
     return `An error has occurred: ${error.message}`;
   }
-  return (
-    <>
-      <ModalHeader>{data.title}</ModalHeader>
-      <ModalBody>
-        <Image src={data.image} alt={data.title} fit="cover" />
-        <Text
-          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.summary) }}
-        />
-        <Text
-          dangerouslySetInnerHTML={{
-            __html: DOMPurify.sanitize(data.instructions),
-          }}
-        />
-      </ModalBody>
-    </>
-  );
+  return { data };
 }
 
-export default ItemRecipe;
+export default SearchItem;
