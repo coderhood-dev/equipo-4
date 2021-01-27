@@ -1,15 +1,13 @@
-import { Box } from '@chakra-ui/react';
 import React, { useState } from 'react';
 
 import Header from './Header';
 import SearchFieldCollapse from './SearchFieldCollapse';
 import SearchResults from './SearchResults';
+import HomeScreen from './HomeScreen';
 
 const Home = () => {
-  // const [didUserSearch, setDidUserSearch] = useState(false);
   const [queryURL, setQueryURL] = useState('');
   const handleConditionalRender = (URL) => {
-    // setDidUserSearch(true);
     setQueryURL(URL);
   };
 
@@ -17,11 +15,7 @@ const Home = () => {
     <div>
       <Header pagename="Home" />
       <SearchFieldCollapse handleConditionalRender={handleConditionalRender} />
-      {queryURL !== '' ? (
-        <SearchResults queryURL={queryURL} />
-      ) : (
-        <Box>vercel test</Box>
-      )}
+      {queryURL !== '' ? <SearchResults queryURL={queryURL} /> : <HomeScreen />}
     </div>
   );
 };
