@@ -8,8 +8,9 @@ import {
   useDisclosure,
   Collapse,
   Button,
+  HStack,
 } from '@chakra-ui/react';
-import { SearchIcon } from '@chakra-ui/icons';
+import { SearchIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import queryString from 'query-string';
 import CheckboxInput from './CheckboxInput';
 import RangesInput from './RangesInput';
@@ -54,6 +55,7 @@ function SearchFieldCollapse({ handleConditionalRender }) {
       query: '',
       diet: 'any',
     });
+    const { isOpen, onToggle, onClose } = useDisclosure();
 
     const handleStringChange = (e) => {
       setUserQuery({
@@ -81,9 +83,8 @@ function SearchFieldCollapse({ handleConditionalRender }) {
         }
       );
       handleConditionalRender(queryURL);
+      onClose();
     };
-
-    const { isOpen, onToggle } = useDisclosure();
 
     return (
       <Box>
@@ -96,18 +97,23 @@ function SearchFieldCollapse({ handleConditionalRender }) {
               value={userQuery.query}
               onChange={handleStringChange}
             />
-            <InputRightElement>
-              <IconButton
-                aria-label="Search"
-                icon={<SearchIcon />}
-                onClick={() => SearchQuery()}
-              />
+            <InputRightElement width="0. rem">
+              <HStack>
+                <IconButton
+                  aria-label="Search"
+                  icon={<SearchIcon />}
+                  onClick={() => SearchQuery()}
+                  size="sm"
+                />
+                <Button size="sm" onClick={onToggle}>
+                  <ChevronDownIcon />
+                </Button>
+              </HStack>
             </InputRightElement>
           </InputGroup>
         </Box>
 
         <>
-          <Button onClick={onToggle}>Advanced Search</Button>
           <Collapse in={isOpen} animateOpacity>
             <Box
               p="40px"
