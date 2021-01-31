@@ -1,7 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Flex, Heading, Text, Input, Button } from '@chakra-ui/react';
-import Header from './Header';
 
 function SignUp() {
   const [email, setEmail] = React.useState('');
@@ -30,7 +29,6 @@ function SignUp() {
 
   return (
     <div>
-      <Header pagename="" />
       <Heading as="h1" textAlign="center" mt="2rem" color="#065666">
         SignUp
       </Heading>

@@ -6,17 +6,17 @@ function HomeScreen() {
   const tabList = [
     {
       tabTitle: 'Top Popular',
-      tabURL: `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_QUICKSEARCH_KEY}&sort=popularity`,
+      tabQuery: `?sort=popularity`,
       tabID: 'topPopular',
     },
     {
       tabTitle: 'Top Healthy',
-      tabURL: `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_QUICKSEARCH_KEY}&sort=healthiness`,
+      tabQuery: `?sort=healthiness`,
       tabID: 'topHealthy',
     },
     {
       tabTitle: 'Discover more!',
-      tabURL: `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_QUICKSEARCH_KEY}&sort=random`,
+      tabQuery: `?sort=random`,
       tabID: 'discoverMore',
     },
   ];
@@ -31,7 +31,7 @@ function HomeScreen() {
         <TabPanels>
           {tabList.map((item) => (
             <TabPanel key={item.tabID}>
-              <SearchResults queryURL={item.tabURL} />
+              <SearchResults query={item.tabQuery} />
             </TabPanel>
           ))}
         </TabPanels>

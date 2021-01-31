@@ -4,7 +4,11 @@ import { useQuery } from 'react-query';
 
 import CardList from './CardList';
 
-function SearchResults({ queryURL }) {
+function SearchResults({ query }) {
+  const queryURL = `${process.env.REACT_APP_SEARCH_URL + query}&apiKey=${
+    process.env.REACT_APP_KEY
+  }`;
+
   const { isLoading, error, data } = useQuery(
     ['foodData', queryURL],
     async () => {

@@ -8,6 +8,8 @@ import About from './About';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import Layout from './Layout';
+import SearchResultsPage from './SearchResultsPage';
+import ItemRecipe from './ItemRecipe';
 
 const App = () => (
   <Router>
@@ -24,6 +26,12 @@ const App = () => (
         </Route>
         <Route path="/signup">
           <SignUp />
+        </Route>
+        <Route path="/search">
+          <SearchResultsPage />
+        </Route>
+        <Route path="/recipe">
+          <ItemRecipe />
         </Route>
         <Route exact path="/">
           <Home />

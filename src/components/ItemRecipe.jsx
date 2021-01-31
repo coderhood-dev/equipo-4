@@ -9,10 +9,16 @@ import {
 import React from 'react';
 import { useQuery } from 'react-query';
 import DOMPurify from 'dompurify';
+import { useLocation } from 'react-router-dom';
 import NutritionalTable from './NutritionalTable';
 
-function ItemRecipe({ item }) {
-  const queryURL = `https://api.spoonacular.com/recipes/${item.id}/information?apiKey=${process.env.REACT_APP_ADVANCEDSEARCH_KEY}&includeNutrition=true`;
+function ItemRecipe() {
+  const location = useLocation();
+
+  const queryURL = `${
+    process.env.REACT_APP_API_URL + location.pathname + location.search
+  }&apiKey=${process.env.REACT_APP_KEY}`;
+
   const { isLoading, error, data } = useQuery(
     ['recipeData', queryURL],
     async () => {

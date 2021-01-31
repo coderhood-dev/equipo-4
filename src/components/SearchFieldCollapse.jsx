@@ -11,18 +11,13 @@ import {
   HStack,
 } from '@chakra-ui/react';
 import { SearchIcon, ChevronDownIcon } from '@chakra-ui/icons';
+import { useHistory } from 'react-router-dom';
 import queryString from 'query-string';
 import CheckboxInput from './CheckboxInput';
 import RangesInput from './RangesInput';
 import RadioInput from './RadioInput';
 
-function SearchFieldCollapse({ handleConditionalRender }) {
-  const APIlist = {
-    type: 'Quick Search',
-    URL: 'https://api.spoonacular.com/recipes/complexSearch',
-    apiKey: process.env.REACT_APP_QUICKSEARCH_KEY,
-  };
-
+function SearchFieldCollapse() {
   const advSearchRangesList = [
     { id: 'minCarbs', label: 'Minimum Carbs per serving' },
     { id: 'maxCarbs', label: 'Maximum Carbs per serving' },
@@ -45,17 +40,13 @@ function SearchFieldCollapse({ handleConditionalRender }) {
     { id: 'dairy', label: 'Dairy' },
   ];
 
-  function SearchInput(
-    APIdata,
-    advSearchRanges,
-    advSearchDiets,
-    advSearchIntolerances
-  ) {
+  function SearchInput(advSearchRanges, advSearchDiets, advSearchIntolerances) {
     const [userQuery, setUserQuery] = useState({
       query: '',
       diet: 'any',
     });
     const { isOpen, onToggle, onClose } = useDisclosure();
+    const history = useHistory();
 
     const handleStringChange = (e) => {
       setUserQuery({
@@ -72,18 +63,12 @@ function SearchFieldCollapse({ handleConditionalRender }) {
     };
 
     const SearchQuery = () => {
-      const queryURL = queryString.stringifyUrl(
-        {
-          url: APIdata.URL,
-          query: { ...userQuery, apiKey: APIdata.apiKey },
-        },
-        {
-          arrayFormat: 'comma',
-          skipEmptyString: true,
-        }
-      );
-      handleConditionalRender(queryURL);
+      const query = queryString.stringify(userQuery, {
+        arrayFormat: 'comma',
+        skipEmptyString: true,
+      });
       onClose();
+      history.push(`/search?${query}`);
     };
 
     return (
@@ -150,7 +135,6 @@ function SearchFieldCollapse({ handleConditionalRender }) {
     );
   }
   return SearchInput(
-    APIlist,
     advSearchRangesList,
     advSearchDietsList,
     advSearchIntolerancesList
