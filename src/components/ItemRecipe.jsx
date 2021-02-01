@@ -1,11 +1,4 @@
-import {
-  Text,
-  ModalHeader,
-  ModalBody,
-  Image,
-  Link,
-  Heading,
-} from '@chakra-ui/react';
+import { Text, Image, Link, Heading } from '@chakra-ui/react';
 import React from 'react';
 import { useQuery } from 'react-query';
 import DOMPurify from 'dompurify';
@@ -14,6 +7,7 @@ import NutritionalTable from './NutritionalTable';
 
 function ItemRecipe() {
   const location = useLocation();
+  console.log(location);
 
   const queryURL = `${
     process.env.REACT_APP_API_URL + location.pathname + location.search
@@ -38,28 +32,29 @@ function ItemRecipe() {
   }
   return (
     <>
-      <ModalHeader>{data.title}</ModalHeader>
-      <ModalBody>
-        <Image src={data.image} alt={data.title} fit="cover" />
-        <Heading mb={4}>Summary</Heading>
+      <Heading>{data.title}</Heading>
+
+      <Image src={data.image} alt={data.title} fit="cover" />
+      <Heading mb={4}>Summary</Heading>
+      <Text
+        dangerouslySetInnerHTML={{
+          __html: DOMPurify.sanitize(data.summary),
+        }}
+      />
+      <Heading mb={4}>Instructions</Heading>
+      {data.instructions ? (
         <Text
-          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.summary) }}
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(data.instructions),
+          }}
         />
-        <Heading mb={4}>Instructions</Heading>
-        {data.instructions ? (
-          <Text
-            dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(data.instructions),
-            }}
-          />
-        ) : (
-          <Text>
-            Read the detailed instructions on
-            <Link href={`${data.sourceUrl}`}>{`${data.sourceName}`}</Link>
-          </Text>
-        )}
-        <NutritionalTable data={data} />
-      </ModalBody>
+      ) : (
+        <Text>
+          Read the detailed instructions on
+          <Link href={`${data.sourceUrl}`}>{`${data.sourceName}`}</Link>
+        </Text>
+      )}
+      <NutritionalTable data={data} />
     </>
   );
 }

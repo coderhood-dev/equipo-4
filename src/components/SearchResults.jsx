@@ -1,10 +1,12 @@
 import { Box } from '@chakra-ui/react';
 import React from 'react';
 import { useQuery } from 'react-query';
+// import { useLocation } from 'react-router-dom';
 
 import CardList from './CardList';
 
 function SearchResults({ query }) {
+  //  const searchResultsLocation = useLocation();
   const queryURL = `${process.env.REACT_APP_SEARCH_URL + query}&apiKey=${
     process.env.REACT_APP_KEY
   }`;

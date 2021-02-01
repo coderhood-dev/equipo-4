@@ -9,36 +9,39 @@ import SignIn from './SignIn';
 import SignUp from './SignUp';
 import Layout from './Layout';
 import SearchResultsPage from './SearchResultsPage';
-import ItemRecipe from './ItemRecipe';
+import ViewRecipe from './ViewRecipe';
 
-const App = () => (
-  <Router>
-    <Layout>
-      <Switch>
-        <Route path="/about">
-          <About />
-        </Route>
-        <Route path="/profile">
-          <Profile />
-        </Route>
-        <Route path="/signin">
-          <SignIn />
-        </Route>
-        <Route path="/signup">
-          <SignUp />
-        </Route>
-        <Route path="/search">
-          <SearchResultsPage />
-        </Route>
-        <Route path="/recipe">
-          <ItemRecipe />
-        </Route>
-        <Route exact path="/">
-          <Home />
-        </Route>
-      </Switch>
-    </Layout>
-  </Router>
-);
+function App() {
+  return (
+    <Router>
+      <Layout>
+        <Switch>
+          <Route path="/about">
+            <About />
+          </Route>
+          <Route path="/profile">
+            <Profile />
+          </Route>
+          <Route path="/signin">
+            <SignIn />
+          </Route>
+          <Route path="/signup">
+            <SignUp />
+          </Route>
+          <Route path="/search">
+            <SearchResultsPage />
+          </Route>
+          <Route path="/recipes">
+            <ViewRecipe />
+          </Route>
+
+          <Route exact path="/">
+            <Home />
+          </Route>
+        </Switch>
+      </Layout>
+    </Router>
+  );
+}
 
 export default App;
