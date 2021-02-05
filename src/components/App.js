@@ -34,7 +34,6 @@ function App() {
           <Route path="/recipes">
             <ViewRecipe />
           </Route>
-
           <Route exact path="/">
             <Home />
           </Route>

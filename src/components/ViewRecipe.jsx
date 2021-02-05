@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Modal,
   ModalOverlay,
@@ -9,23 +9,30 @@ import {
   Button,
   ModalBody,
 } from '@chakra-ui/react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import ItemRecipe from './ItemRecipe';
 
 function ViewRecipe() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const location = useLocation();
+  const history = useHistory();
+  useEffect(onOpen, [onOpen]);
+
   const { state = {} } = location;
   const { modal } = state;
+
+  function handleClose() {
+    onClose();
+    history.goBack();
+  }
 
   if (modal) {
     return (
       <>
-        <Button onClick={onOpen}>Open</Button>
         <Modal
           isOpen={isOpen}
-          onClose={onClose}
-          size="full"
+          onClose={handleClose}
+          size="xl"
           scrollBehavior="inside"
         >
           <ModalOverlay />
@@ -35,13 +42,7 @@ function ViewRecipe() {
               <ItemRecipe />
             </ModalBody>
             <ModalFooter>
-              <Button
-                colorScheme="blue"
-                mr={3}
-                onClick={() => {
-                  onClose();
-                }}
-              >
+              <Button colorScheme="blue" mr={3} onClick={handleClose}>
                 Close
               </Button>
               <Button>Save</Button>
@@ -53,7 +54,6 @@ function ViewRecipe() {
   }
   return (
     <>
-      <p>No Modal</p>
       <ItemRecipe />
     </>
   );
