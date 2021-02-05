@@ -1,5 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useLocation,
+} from 'react-router-dom';
 
 import Profile from './Profile';
 import Home from './Home';
@@ -12,6 +17,8 @@ import SearchResultsPage from './SearchResultsPage';
 import ViewRecipe from './ViewRecipe';
 
 function App() {
+  const location = useLocation();
+  console.log(location);
   return (
     <Router>
       <Layout>
