@@ -1,12 +1,10 @@
 import { Box } from '@chakra-ui/react';
 import React from 'react';
 import { useQuery } from 'react-query';
-// import { useLocation } from 'react-router-dom';
 
 import CardList from './CardList';
 
 function SearchResults({ query }) {
-  //  const searchResultsLocation = useLocation();
   const queryURL = `${process.env.REACT_APP_SEARCH_URL + query}&apiKey=${
     process.env.REACT_APP_KEY
   }`;
@@ -20,7 +18,12 @@ function SearchResults({ query }) {
       }
       throw Error(`code ${response.status}`);
     },
-    { refetchOnWindowFocus: false }
+    {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      staleTime: 3600000,
+      cacheTime: 3600000,
+    }
   );
 
   if (isLoading) return 'Loading...';

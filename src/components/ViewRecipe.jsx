@@ -8,8 +8,9 @@ import {
   useDisclosure,
   Button,
   ModalBody,
+  Flex,
 } from '@chakra-ui/react';
-import { useLocation, useHistory } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import ItemRecipe from './ItemRecipe';
 
 function ViewRecipe() {
@@ -18,11 +19,10 @@ function ViewRecipe() {
   const history = useHistory();
   useEffect(onOpen, [onOpen]);
 
-  const { state = { background: {} } } = location;
-  const {
-    modal,
-    background: { pathname, search },
-  } = state;
+  const { state = {} } = location;
+  const { modal, background = {}, neighbors } = state;
+  const { pathname, search } = background;
+  const { prevItem, nextItem } = neighbors;
 
   function handleClose() {
     onClose();
@@ -31,11 +31,11 @@ function ViewRecipe() {
 
   if (modal) {
     return (
-      <>
+      <Flex>
         <Modal
           isOpen={isOpen}
           onClose={handleClose}
-          size="xl"
+          size="6xl"
           scrollBehavior="inside"
         >
           <ModalOverlay />
@@ -45,6 +45,23 @@ function ViewRecipe() {
               <ItemRecipe />
             </ModalBody>
             <ModalFooter>
+              <Link
+                to={{
+                  pathname: `/recipes/${prevItem.id}/information?includeNutrition=true`,
+                  state: { modal, background },
+                }}
+              >
+                <Button>Prev</Button>
+              </Link>
+              <Link
+                to={{
+                  pathname: `/recipes/${nextItem.id}/information?includeNutrition=true`,
+                  state: { modal, background },
+                }}
+              >
+                <Button>Next</Button>
+              </Link>
+
               <Button colorScheme="blue" mr={3} onClick={handleClose}>
                 Close
               </Button>
@@ -52,7 +69,7 @@ function ViewRecipe() {
             </ModalFooter>
           </ModalContent>
         </Modal>
-      </>
+      </Flex>
     );
   }
   return (

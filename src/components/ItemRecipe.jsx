@@ -22,7 +22,12 @@ function ItemRecipe() {
       }
       throw Error(`code ${response.status}`);
     },
-    { refetchOnWindowFocus: false }
+    {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      staleTime: 3600000,
+      cacheTime: 3600000,
+    }
   );
 
   if (isLoading) return 'Loading...';

@@ -2,14 +2,14 @@ import React from 'react';
 import { Text, Image, Box, Flex } from '@chakra-ui/react';
 import { Link, useLocation } from 'react-router-dom';
 
-function CardItem({ item }) {
+function CardItem({ item, prevItem, nextItem }) {
   const background = useLocation();
   return (
     <>
       <Link
         to={{
           pathname: `/recipes/${item.id}/information?includeNutrition=true`,
-          state: { modal: true, background },
+          state: { modal: true, background, neighbors: { prevItem, nextItem } },
         }}
       >
         <Flex
