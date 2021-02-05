@@ -3,13 +3,13 @@ import { Text, Image, Box, Flex } from '@chakra-ui/react';
 import { Link, useLocation } from 'react-router-dom';
 
 function CardItem({ item }) {
-  const parentLocation = useLocation();
+  const background = useLocation();
   return (
     <>
       <Link
         to={{
           pathname: `/recipes/${item.id}/information?includeNutrition=true`,
-          state: { modal: true, parentLocation },
+          state: { modal: true, background },
         }}
       >
         <Flex

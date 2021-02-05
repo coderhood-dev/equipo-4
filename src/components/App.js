@@ -1,50 +1,14 @@
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  useLocation,
-} from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-import Profile from './Profile';
-import Home from './Home';
-import About from './About';
-
-import SignIn from './SignIn';
-import SignUp from './SignUp';
 import Layout from './Layout';
-import SearchResultsPage from './SearchResultsPage';
-import ViewRecipe from './ViewRecipe';
+import ModalSwitch from './ModalSwitch';
 
 function App() {
-  const location = useLocation();
-  console.log(location);
   return (
     <Router>
       <Layout>
-        <Switch>
-          <Route path="/about">
-            <About />
-          </Route>
-          <Route path="/profile">
-            <Profile />
-          </Route>
-          <Route path="/signin">
-            <SignIn />
-          </Route>
-          <Route path="/signup">
-            <SignUp />
-          </Route>
-          <Route path="/search">
-            <SearchResultsPage />
-          </Route>
-          <Route path="/recipes">
-            <ViewRecipe />
-          </Route>
-          <Route exact path="/">
-            <Home />
-          </Route>
-        </Switch>
+        <ModalSwitch />
       </Layout>
     </Router>
   );

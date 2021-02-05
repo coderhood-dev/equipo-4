@@ -18,12 +18,11 @@ function ViewRecipe() {
   const history = useHistory();
   useEffect(onOpen, [onOpen]);
 
+  const { state = { background: {} } } = location;
   const {
-    state: {
-      modal,
-      parentLocation: { pathname, search },
-    },
-  } = location;
+    modal,
+    background: { pathname, search },
+  } = state;
 
   function handleClose() {
     onClose();
