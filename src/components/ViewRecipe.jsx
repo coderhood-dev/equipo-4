@@ -16,13 +16,15 @@ import ItemRecipe from './ItemRecipe';
 function ViewRecipe() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const location = useLocation();
+  console.log('location', location);
   const history = useHistory();
   useEffect(onOpen, [onOpen]);
 
   const { state = {} } = location;
-  const { modal, background = {}, neighbors } = state;
+  const { modal, background = {}, neighbors = {} } = state;
   const { pathname, search } = background;
   const { prevItem, nextItem } = neighbors;
+  console.log('neighbors', neighbors);
 
   function handleClose() {
     onClose();
@@ -45,22 +47,26 @@ function ViewRecipe() {
               <ItemRecipe />
             </ModalBody>
             <ModalFooter>
-              <Link
-                to={{
-                  pathname: `/recipes/${prevItem.id}/information?includeNutrition=true`,
-                  state: { modal, background },
-                }}
-              >
-                <Button>Prev</Button>
-              </Link>
-              <Link
-                to={{
-                  pathname: `/recipes/${nextItem.id}/information?includeNutrition=true`,
-                  state: { modal, background },
-                }}
-              >
-                <Button>Next</Button>
-              </Link>
+              {prevItem && (
+                <Link
+                  to={{
+                    pathname: `/recipes/${prevItem.id}/information?includeNutrition=true`,
+                    state: { modal, background },
+                  }}
+                >
+                  <Button>Prev</Button>
+                </Link>
+              )}
+              {nextItem && (
+                <Link
+                  to={{
+                    pathname: `/recipes/${nextItem.id}/information?includeNutrition=true`,
+                    state: { modal, background },
+                  }}
+                >
+                  <Button>Next</Button>
+                </Link>
+              )}
 
               <Button colorScheme="blue" mr={3} onClick={handleClose}>
                 Close

@@ -10,7 +10,6 @@ import ViewRecipe from './ViewRecipe';
 
 export default function ModalSwitch() {
   const location = useLocation();
-  console.log(location);
   const background = location.state && location.state.background;
   /* if state is undefined, defaults to undefined, if state exists defaults to state.background */
   /* SEE SHORTCIRCUIT EVALUATION */

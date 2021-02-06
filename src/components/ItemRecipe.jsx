@@ -7,7 +7,6 @@ import NutritionalTable from './NutritionalTable';
 
 function ItemRecipe() {
   const location = useLocation();
-  console.log(location);
 
   const queryURL = `${
     process.env.REACT_APP_API_URL + location.pathname + location.search
