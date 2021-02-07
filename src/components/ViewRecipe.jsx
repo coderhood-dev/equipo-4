@@ -32,6 +32,7 @@ function ViewRecipe() {
   }
 
   if (modal) {
+    /* TODO: pass items array to this component (via context or some other means), implement neighbor finding logic here via indexOf(item) +/-1 instead of passing it via history */
     return (
       <Flex>
         <Modal

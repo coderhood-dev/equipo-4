@@ -1,8 +1,8 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 
-import SearchFieldCollapse from './SearchFieldCollapse';
-import SearchResults from './SearchResults';
+import SearchFieldCollapse from '../components/SearchFieldCollapse';
+import SearchResults from '../components/SearchResults';
 
 const SearchResultsPage = () => {
   const location = useLocation();

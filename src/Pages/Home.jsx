@@ -1,8 +1,8 @@
 import React from 'react';
 
-import SearchFieldCollapse from './SearchFieldCollapse';
+import SearchFieldCollapse from '../components/SearchFieldCollapse';
 
-import HomeScreen from './HomeScreen';
+import HomeScreen from '../components/HomeScreen';
 
 const Home = () => {
   return (

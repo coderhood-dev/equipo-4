@@ -1,11 +1,11 @@
 import React from 'react';
 import { Switch, Route, useLocation } from 'react-router-dom';
-import Profile from './Profile';
-import Home from './Home';
-import About from './About';
-import SignIn from './SignIn';
-import SignUp from './SignUp';
-import SearchResultsPage from './SearchResultsPage';
+import Profile from '../Pages/Profile';
+import Home from '../Pages/Home';
+import About from '../Pages/About';
+import SignIn from '../Pages/SignIn';
+import SignUp from '../Pages/SignUp';
+import SearchResultsPage from '../Pages/SearchResultsPage';
 import ViewRecipe from './ViewRecipe';
 
 export default function ModalSwitch() {
