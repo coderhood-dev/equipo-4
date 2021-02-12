@@ -16,15 +16,26 @@ import ItemRecipe from './ItemRecipe';
 function ViewRecipe() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const location = useLocation();
-  console.log('location', location);
+
   const history = useHistory();
   useEffect(onOpen, [onOpen]);
 
   const { state = {} } = location;
-  const { modal, background = {}, neighbors = {} } = state;
+  const { modal, background = {}, galleryArray = [], item = {} } = state;
+
   const { pathname, search } = background;
-  const { prevItem, nextItem } = neighbors;
-  console.log('neighbors', neighbors);
+
+  const currentItemIndex = galleryArray.indexOf(item);
+  const maxIndex = galleryArray.length - 1;
+
+  const neighbors = {
+    prevItem:
+      currentItemIndex > 0 ? galleryArray[currentItemIndex - 1] : undefined,
+    nextItem:
+      currentItemIndex < maxIndex
+        ? galleryArray[currentItemIndex + 1]
+        : undefined,
+  };
 
   function handleClose() {
     onClose();
@@ -32,7 +43,6 @@ function ViewRecipe() {
   }
 
   if (modal) {
-    /* TODO: pass items array to this component (via context or some other means), implement neighbor finding logic here via indexOf(item) +/-1 instead of passing it via history */
     return (
       <Flex>
         <Modal
@@ -48,21 +58,31 @@ function ViewRecipe() {
               <ItemRecipe />
             </ModalBody>
             <ModalFooter>
-              {prevItem && (
+              {neighbors.prevItem && (
                 <Link
                   to={{
-                    pathname: `/recipes/${prevItem.id}/information?includeNutrition=true`,
-                    state: { modal, background },
+                    pathname: `/recipes/${neighbors.prevItem.id}/information?includeNutrition=true`,
+                    state: {
+                      modal,
+                      background,
+                      galleryArray,
+                      item: neighbors.prevItem,
+                    },
                   }}
                 >
                   <Button>Prev</Button>
                 </Link>
               )}
-              {nextItem && (
+              {neighbors.nextItem && (
                 <Link
                   to={{
-                    pathname: `/recipes/${nextItem.id}/information?includeNutrition=true`,
-                    state: { modal, background },
+                    pathname: `/recipes/${neighbors.nextItem.id}/information?includeNutrition=true`,
+                    state: {
+                      modal,
+                      background,
+                      galleryArray,
+                      item: neighbors.nextItem,
+                    },
                   }}
                 >
                   <Button>Next</Button>
