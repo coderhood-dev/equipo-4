@@ -65,7 +65,8 @@ function SearchFieldCollapse({ userQueryData }) {
       });
     };
 
-    const SearchQuery = () => {
+    const SearchQuery = (e) => {
+      e.preventDefault();
       const query = queryString.stringify(userQuery, {
         arrayFormat: 'comma',
         skipEmptyString: true,
@@ -75,7 +76,7 @@ function SearchFieldCollapse({ userQueryData }) {
     };
 
     return (
-      <Box>
+      <Box as="form">
         <Box>
           <InputGroup size="md">
             <Input
@@ -90,8 +91,9 @@ function SearchFieldCollapse({ userQueryData }) {
                 <IconButton
                   aria-label="Search"
                   icon={<SearchIcon />}
-                  onClick={() => SearchQuery()}
+                  onClick={(e) => SearchQuery(e)}
                   size="sm"
+                  type="submit"
                 />
                 <Button size="sm" onClick={onToggle}>
                   {isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
