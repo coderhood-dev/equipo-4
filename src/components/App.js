@@ -1,36 +1,17 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-import Profile from './Profile';
-import Home from './Home';
-import About from './About';
-
-import SignIn from './SignIn';
-import SignUp from './SignUp';
 import Layout from './Layout';
+import ModalSwitch from './ModalSwitch';
 
-const App = () => (
-  <Router>
-    <Layout>
-      <Switch>
-        <Route path="/about">
-          <About />
-        </Route>
-        <Route path="/profile">
-          <Profile />
-        </Route>
-        <Route path="/signin">
-          <SignIn />
-        </Route>
-        <Route path="/signup">
-          <SignUp />
-        </Route>
-        <Route exact path="/">
-          <Home />
-        </Route>
-      </Switch>
-    </Layout>
-  </Router>
-);
+function App() {
+  return (
+    <Router>
+      <Layout>
+        <ModalSwitch />
+      </Layout>
+    </Router>
+  );
+}
 
 export default App;

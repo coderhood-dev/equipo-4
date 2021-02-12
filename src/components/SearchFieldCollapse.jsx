@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react';
+import { React, useState } from 'react';
 import {
   Box,
   Input,
@@ -8,34 +8,23 @@ import {
   useDisclosure,
   Collapse,
   Button,
+  HStack,
 } from '@chakra-ui/react';
-import { SearchIcon } from '@chakra-ui/icons';
+import { SearchIcon, ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
+import { useHistory } from 'react-router-dom';
 import queryString from 'query-string';
 import CheckboxInput from './CheckboxInput';
 import RangesInput from './RangesInput';
 import RadioInput from './RadioInput';
 
-function SearchFieldCollapse({ handleConditionalRender }) {
-  const APIlist = [
-    {
-      type: 'Quick Search',
-      URL: 'https://api.spoonacular.com/recipes/complexSearch',
-      apiKey: process.env.REACT_APP_QUICKSEARCH_KEY,
-    },
-    {
-      type: 'Advanced Search',
-      URL: 'https://api.spoonacular.com/recipes/complexSearch',
-      apiKey: process.env.REACT_APP_ADVANCEDSEARCH_KEY,
-    },
-  ];
-
+function SearchFieldCollapse({ userQueryData }) {
   const advSearchRangesList = [
     { id: 'minCarbs', label: 'Minimum Carbs per serving' },
-    { id: 'MaxCarbs', label: 'Max Carbs per serving' },
+    { id: 'maxCarbs', label: 'Maximum Carbs per serving' },
     { id: 'minFat', label: 'Minimum Fat per serving' },
-    { id: 'MaxFat', label: 'Max Fat per serving' },
+    { id: 'maxFat', label: 'Maximum Fat per serving' },
     { id: 'minProtein', label: 'Minimum Protein per serving' },
-    { id: 'MaxProtein', label: 'Max Protein per serving' },
+    { id: 'maxProtein', label: 'Maximum Protein per serving' },
   ];
 
   const advSearchDietsList = [
@@ -51,17 +40,16 @@ function SearchFieldCollapse({ handleConditionalRender }) {
     { id: 'dairy', label: 'Dairy' },
   ];
 
-  function SearchInput(
-    APIdata,
-    advSearchRanges,
-    advSearchDiets,
-    advSearchIntolerances
-  ) {
-    const [quick, advanced] = APIdata;
-    const [queryType, setQueryType] = useState(quick);
-    const [userQuery, setUserQuery] = useState({
-      query: '',
-    });
+  function SearchInput(advSearchRanges, advSearchDiets, advSearchIntolerances) {
+    const [userQuery, setUserQuery] = useState(
+      () =>
+        userQueryData || {
+          query: '',
+          diet: 'any',
+        }
+    );
+    const { isOpen, onToggle, onClose } = useDisclosure();
+    const history = useHistory();
 
     const handleStringChange = (e) => {
       setUserQuery({
@@ -78,30 +66,13 @@ function SearchFieldCollapse({ handleConditionalRender }) {
     };
 
     const SearchQuery = () => {
-      const queryURL = queryString.stringifyUrl(
-        {
-          url: queryType.URL,
-          query: { ...userQuery, apiKey: queryType.apiKey },
-        },
-        {
-          arrayFormat: 'comma',
-          skipEmptyString: true,
-        }
-      );
-      console.log(queryURL);
-      handleConditionalRender(queryURL);
+      const query = queryString.stringify(userQuery, {
+        arrayFormat: 'comma',
+        skipEmptyString: true,
+      });
+      onClose();
+      history.push(`/search?${query}`, userQuery);
     };
-
-    const { isOpen, onToggle } = useDisclosure();
-
-    useEffect(() => {
-      if (isOpen) {
-        setQueryType(advanced);
-      } else {
-        setQueryType(quick);
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isOpen]);
 
     return (
       <Box>
@@ -109,23 +80,28 @@ function SearchFieldCollapse({ handleConditionalRender }) {
           <InputGroup size="md">
             <Input
               pr="4.5rem"
-              placeholder={`${queryType.type}`}
+              placeholder="What do you wanna eat?"
               id="query"
               value={userQuery.query}
               onChange={handleStringChange}
             />
-            <InputRightElement>
-              <IconButton
-                aria-label={`${queryType.type}`}
-                icon={<SearchIcon />}
-                onClick={() => SearchQuery()}
-              />
+            <InputRightElement width="">
+              <HStack>
+                <IconButton
+                  aria-label="Search"
+                  icon={<SearchIcon />}
+                  onClick={() => SearchQuery()}
+                  size="sm"
+                />
+                <Button size="sm" onClick={onToggle}>
+                  {isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
+                </Button>
+              </HStack>
             </InputRightElement>
           </InputGroup>
         </Box>
 
         <>
-          <Button onClick={onToggle}>Advanced Search</Button>
           <Collapse in={isOpen} animateOpacity>
             <Box
               p="40px"
@@ -139,6 +115,7 @@ function SearchFieldCollapse({ handleConditionalRender }) {
                 list={advSearchDiets}
                 category="Diet"
                 handleCheckboxChange={(e) => handleChange(e, 'diet')}
+                value={userQuery.diet}
               />
 
               <CheckboxInput
@@ -152,7 +129,7 @@ function SearchFieldCollapse({ handleConditionalRender }) {
                 list={advSearchRanges}
                 category="Nutritional Ranges"
                 userQuery={userQuery}
-                handleStringChange={handleStringChange}
+                handleNumberChange={handleStringChange}
               />
             </Box>
           </Collapse>
@@ -161,7 +138,6 @@ function SearchFieldCollapse({ handleConditionalRender }) {
     );
   }
   return SearchInput(
-    APIlist,
     advSearchRangesList,
     advSearchDietsList,
     advSearchIntolerancesList
