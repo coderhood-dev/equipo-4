@@ -37,6 +37,8 @@ function ViewRecipe() {
         : undefined,
   };
 
+  const { prevItem, nextItem } = neighbors;
+
   function handleClose() {
     onClose();
     history.push(`${pathname + search}`);
@@ -58,30 +60,30 @@ function ViewRecipe() {
               <ItemRecipe />
             </ModalBody>
             <ModalFooter>
-              {neighbors.prevItem && (
+              {prevItem && (
                 <Link
                   to={{
-                    pathname: `/recipes/${neighbors.prevItem.id}/information?includeNutrition=true`,
+                    pathname: `/recipes/${prevItem.id}/information?includeNutrition=true`,
                     state: {
                       modal,
                       background,
                       galleryArray,
-                      item: neighbors.prevItem,
+                      item: prevItem,
                     },
                   }}
                 >
                   <Button>Prev</Button>
                 </Link>
               )}
-              {neighbors.nextItem && (
+              {nextItem && (
                 <Link
                   to={{
-                    pathname: `/recipes/${neighbors.nextItem.id}/information?includeNutrition=true`,
+                    pathname: `/recipes/${nextItem.id}/information?includeNutrition=true`,
                     state: {
                       modal,
                       background,
                       galleryArray,
-                      item: neighbors.nextItem,
+                      item: nextItem,
                     },
                   }}
                 >

@@ -6,11 +6,11 @@ import SearchResults from '../components/SearchResults';
 
 const SearchResultsPage = () => {
   const location = useLocation();
-  const { search } = location;
+  const { search, state } = location;
 
   return (
     <div>
-      <SearchFieldCollapse />
+      <SearchFieldCollapse userQueryData={state} />
       <SearchResults query={search} />
     </div>
   );

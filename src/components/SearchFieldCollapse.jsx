@@ -17,7 +17,7 @@ import CheckboxInput from './CheckboxInput';
 import RangesInput from './RangesInput';
 import RadioInput from './RadioInput';
 
-function SearchFieldCollapse() {
+function SearchFieldCollapse({ userQueryData }) {
   const advSearchRangesList = [
     { id: 'minCarbs', label: 'Minimum Carbs per serving' },
     { id: 'maxCarbs', label: 'Maximum Carbs per serving' },
@@ -41,10 +41,12 @@ function SearchFieldCollapse() {
   ];
 
   function SearchInput(advSearchRanges, advSearchDiets, advSearchIntolerances) {
-    const [userQuery, setUserQuery] = useState({
-      query: '',
-      diet: 'any',
-    });
+    const [userQuery, setUserQuery] = useState(
+      userQueryData || {
+        query: '',
+        diet: 'any',
+      }
+    );
     const { isOpen, onToggle, onClose } = useDisclosure();
     const history = useHistory();
 
@@ -68,7 +70,7 @@ function SearchFieldCollapse() {
         skipEmptyString: true,
       });
       onClose();
-      history.push(`/search?${query}`);
+      history.push(`/search?${query}`, userQuery);
     };
 
     return (
@@ -126,7 +128,7 @@ function SearchFieldCollapse() {
                 list={advSearchRanges}
                 category="Nutritional Ranges"
                 userQuery={userQuery}
-                handleStringChange={handleStringChange}
+                handleNumberChange={handleStringChange}
               />
             </Box>
           </Collapse>
