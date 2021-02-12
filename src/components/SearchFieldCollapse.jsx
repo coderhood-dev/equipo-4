@@ -10,7 +10,7 @@ import {
   Button,
   HStack,
 } from '@chakra-ui/react';
-import { SearchIcon, ChevronDownIcon } from '@chakra-ui/icons';
+import { SearchIcon, ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 import { useHistory } from 'react-router-dom';
 import queryString from 'query-string';
 import CheckboxInput from './CheckboxInput';
@@ -42,10 +42,11 @@ function SearchFieldCollapse({ userQueryData }) {
 
   function SearchInput(advSearchRanges, advSearchDiets, advSearchIntolerances) {
     const [userQuery, setUserQuery] = useState(
-      userQueryData || {
-        query: '',
-        diet: 'any',
-      }
+      () =>
+        userQueryData || {
+          query: '',
+          diet: 'any',
+        }
     );
     const { isOpen, onToggle, onClose } = useDisclosure();
     const history = useHistory();
@@ -84,7 +85,7 @@ function SearchFieldCollapse({ userQueryData }) {
               value={userQuery.query}
               onChange={handleStringChange}
             />
-            <InputRightElement width="0. rem">
+            <InputRightElement width="">
               <HStack>
                 <IconButton
                   aria-label="Search"
@@ -93,7 +94,7 @@ function SearchFieldCollapse({ userQueryData }) {
                   size="sm"
                 />
                 <Button size="sm" onClick={onToggle}>
-                  <ChevronDownIcon />
+                  {isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
                 </Button>
               </HStack>
             </InputRightElement>
