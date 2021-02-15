@@ -2,22 +2,22 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { ChakraProvider } from '@chakra-ui/react';
 import { BrowserRouter } from 'react-router-dom';
-import { QueryCache, ReactQueryCacheProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query-devtools';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
 import './styles/index.css';
 import App from './components/App';
 
-const queryCache = new QueryCache();
+const queryClient = new QueryClient();
 
 ReactDOM.render(
   <React.StrictMode>
     <ChakraProvider>
       <BrowserRouter>
-        <ReactQueryCacheProvider queryCache={queryCache}>
+        <QueryClientProvider client={queryClient}>
           <App />
           <ReactQueryDevtools initialIsOpen />
-        </ReactQueryCacheProvider>
+        </QueryClientProvider>
       </BrowserRouter>
     </ChakraProvider>
   </React.StrictMode>,
