@@ -8,7 +8,16 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import './styles/index.css';
 import App from './components/App';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      staleTime: 3600000,
+      cacheTime: 3600000,
+    },
+  },
+});
 
 ReactDOM.render(
   <React.StrictMode>

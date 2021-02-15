@@ -1,4 +1,4 @@
-import { Box, SimpleGrid, Button } from '@chakra-ui/react';
+import { Box, SimpleGrid, Button, Text } from '@chakra-ui/react';
 import React from 'react';
 import { useInfiniteQuery } from 'react-query';
 
@@ -6,24 +6,18 @@ import CardItem from './CardItem';
 
 function SearchResults({ query }) {
   const itemsPerQuery = 50;
-  const queryURL = `${process.env.REACT_APP_SEARCH_URL + query}&apiKey=${
-    process.env.REACT_APP_KEY
-  }&number=${itemsPerQuery}&offset=`;
+  const queryURL = (offset) =>
+    `${process.env.REACT_APP_SEARCH_URL + query}&apiKey=${
+      process.env.REACT_APP_KEY
+    }&number=${itemsPerQuery}&offset=${offset}`;
 
   const loadMoreButtonRef = React.useRef();
 
-  const getParams = (lastPage) => {
-    console.log(
-      parseInt(lastPage.totalResults, 10) - parseInt(lastPage.offset, 10)
-    );
-    if (
-      parseInt(lastPage.totalResults, 10) - parseInt(lastPage.offset, 10) >
-      parseInt(itemsPerQuery, 10)
-    ) {
-      return parseInt(lastPage.offset, 10) + parseInt(itemsPerQuery, 10);
-    }
-    return false;
-  };
+  const getParams = (lastPage) =>
+    lastPage.totalResults - lastPage.offset > itemsPerQuery
+      ? lastPage.offset + itemsPerQuery
+      : false;
+
   const {
     isLoading,
     error,
@@ -32,22 +26,28 @@ function SearchResults({ query }) {
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery(
-    ['foodData', queryURL],
+    ['foodData', queryURL(0)],
     async ({ pageParam = 0 }) => {
-      const response = await fetch(queryURL + pageParam);
+      const response = await fetch(queryURL(pageParam));
       if (response.ok) {
         return response.json();
       }
       throw Error(`code ${response.status}`);
     },
     {
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      staleTime: 3600000,
-      cacheTime: 3600000,
       getNextPageParam: (lastPage) => getParams(lastPage),
     }
   );
+
+  function statusButton() {
+    if (isFetchingNextPage) {
+      return <Text>Loading more...</Text>;
+    }
+    if (hasNextPage) {
+      return <Text>Load Newer</Text>;
+    }
+    return <Text>Nothing more to load</Text>;
+  }
 
   if (isLoading) return 'Loading...';
 
@@ -61,11 +61,7 @@ function SearchResults({ query }) {
           data.pages.map((page) =>
             page.results.map((item) => {
               return (
-                <CardItem
-                  galleryArray={page.results}
-                  item={item}
-                  key={item.id}
-                />
+                <CardItem pagesArray={data.pages} item={item} key={item.id} />
               );
             })
           )}
@@ -75,14 +71,7 @@ function SearchResults({ query }) {
         onClick={() => fetchNextPage()}
         disabled={!hasNextPage || isFetchingNextPage}
       >
-        {
-          // eslint-disable-next-line no-nested-ternary
-          isFetchingNextPage
-            ? 'Loading more...'
-            : hasNextPage
-            ? 'Load Newer'
-            : 'Nothing more to load'
-        }
+        {statusButton()}
       </Button>
     </Box>
   );
