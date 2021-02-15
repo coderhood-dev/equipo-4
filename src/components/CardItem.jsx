@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, Image, Box, Flex } from '@chakra-ui/react';
 import { Link, useLocation } from 'react-router-dom';
 
-function CardItem({ item, galleryArray }) {
+function CardItem({ item, pagesArray }) {
   const background = useLocation();
   return (
     <>
@@ -12,7 +12,7 @@ function CardItem({ item, galleryArray }) {
           state: {
             modal: true,
             background,
-            galleryArray,
+            pagesArray,
             item,
           },
         }}
