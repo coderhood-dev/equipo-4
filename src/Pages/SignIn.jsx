@@ -1,9 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Flex, Heading, Text, Input, Button } from '@chakra-ui/react';
-import Header from './Header';
+import { Flex, Button, Input, Heading, Text } from '@chakra-ui/react';
 
-function SignUp() {
+function SignIn() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
@@ -16,9 +15,9 @@ function SignUp() {
     history.push('/');
   };
 
-  const handleSignIn = (event) => {
+  const handleSignUp = (event) => {
     event.preventDefault();
-    history.push('/signin');
+    history.push('/signup');
   };
 
   const handleEmailChange = (event) => {
@@ -27,12 +26,10 @@ function SignUp() {
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   };
-
   return (
     <div>
-      <Header pagename="" />
       <Heading as="h1" textAlign="center" mt="2rem" color="#065666">
-        SignUp
+        SignIn
       </Heading>
       <Flex direction="column" alignItems="center" mt="3rem">
         <Flex
@@ -49,21 +46,9 @@ function SignUp() {
           onSubmit={handleSubmit}
         >
           <Text mb="2rem" color="#065666">
-            Welcome :D
+            Good to see you again :D
           </Text>
           {/* <Heading mb="2rem" mt="2rem">SignIn</Heading> */}
-          <Input
-            mb="1rem"
-            placeholder="First name"
-            onChange={handlePasswordChange}
-            bg="white"
-          />
-          <Input
-            mb="1rem"
-            placeholder="Last name"
-            onChange={handlePasswordChange}
-            bg="white"
-          />
           <Input
             mb="1rem"
             placeholder="Email"
@@ -84,7 +69,7 @@ function SignUp() {
             type="submit"
             boxShadow="1px 1px 1px 1px #2b3f3f"
           >
-            SignUp
+            SignIn
           </Button>
         </Flex>
         <Button
@@ -95,14 +80,14 @@ function SignUp() {
           mb="3rem"
           color="white"
           variant="ghost"
-          onClick={handleSignIn}
+          onClick={handleSignUp}
           _hover={{ bg: '#0987A0' }}
         >
-          You do have an account? Sign in
+          You do not have an account? Sign up
         </Button>
       </Flex>
     </div>
   );
 }
 
-export default SignUp;
+export default SignIn;

@@ -1,30 +1,15 @@
-import { Box, Flex, Image, SimpleGrid, Text } from '@chakra-ui/react';
 import { React } from 'react';
+import { SimpleGrid } from '@chakra-ui/react';
 
-function CardItem({ item }) {
-  return (
-    <Flex
-      id={item.id}
-      borderRadius="lg"
-      background="gray.200"
-      overflow="hidden"
-      padding="5"
-      maxW="sm"
-      direction="column"
-      margin="auto"
-    >
-      <Image src={item.image} alt={item.title} fit="cover" />
-      <Box>
-        <Text>{item.title}</Text>
-      </Box>
-    </Flex>
-  );
-}
+import CardItem from './CardItem';
 
 function CardList({ items }) {
   return (
     <SimpleGrid minChildWidth="320px" spacing="5" alignContent="center">
-      {items && items.map((item) => <CardItem item={item} key={item.id} />)}
+      {items &&
+        items.map((item) => {
+          return <CardItem galleryArray={items} item={item} key={item.id} />;
+        })}
     </SimpleGrid>
   );
 }
