@@ -22,6 +22,7 @@ function CardItem({ item, galleryArray }) {
           borderRadius="lg"
           background="#b62a07"
           overflow="hidden"
+          h="400px"
           padding="5"
           maxW="sm"
           direction="column"
@@ -35,6 +36,7 @@ function CardItem({ item, galleryArray }) {
             fit="cover"
             p="10px"
             borderRadius="20px"
+            mb="10px"
           />
           <Box>
             <Text
@@ -42,6 +44,7 @@ function CardItem({ item, galleryArray }) {
               fontSize="lg"
               textAlign="center"
               fontWeight="bold"
+              mt="15px"
               p="10px"
               borderTop="1px solid white"
               borderBottom="1px solid white"
