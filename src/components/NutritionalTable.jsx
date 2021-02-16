@@ -16,18 +16,24 @@ function NutritionalTable({ data }) {
   } = data;
 
   return (
-    <Table variant="simple" size="sm">
+    <Table variant="simple" size="sm" bg="#b62a07" color="white">
       <TableCaption
         placement="top"
         fontSize="xl"
+        color="#b62a07"
+        fontWeight="bold"
       >{`Nutritional information per serving (${
         weightPerServing.amount + weightPerServing.unit
       })`}</TableCaption>
       <Thead>
         <Tr>
           <Th />
-          <Th isNumeric>Amount per serving</Th>
-          <Th isNumeric>% of daily needs</Th>
+          <Th isNumeric color="white">
+            Amount per serving
+          </Th>
+          <Th isNumeric color="white">
+            % of daily needs
+          </Th>
         </Tr>
       </Thead>
       <Tbody>
@@ -42,8 +48,12 @@ function NutritionalTable({ data }) {
       <Tfoot>
         <Tr>
           <Th />
-          <Th isNumeric>Amount per serving</Th>
-          <Th isNumeric>% of daily needs</Th>
+          <Th isNumeric color="white">
+            Amount per serving
+          </Th>
+          <Th isNumeric color="white">
+            % of daily needs
+          </Th>
         </Tr>
       </Tfoot>
     </Table>

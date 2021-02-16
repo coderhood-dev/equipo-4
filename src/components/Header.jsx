@@ -10,6 +10,7 @@ import {
   Heading,
   Button,
 } from '@chakra-ui/react';
+import { ChevronDownIcon } from '@chakra-ui/icons';
 
 const Header = ({ pagename }) => (
   <Flex
@@ -24,14 +25,15 @@ const Header = ({ pagename }) => (
   >
     <Heading as="h1">{pagename}</Heading>
     <Menu>
-      <Flex ml="2rem">
+      <Flex>
         <MenuButton
           as={Button}
+          rightIcon={<ChevronDownIcon />}
           color="#ffffff"
           _hover={{ bg: '#6e1a05' }}
           _expanded={{ bg: '#b62a07' }}
           variant="ghost"
-          w="2rem"
+          w="6rem"
           borderRadius="8px"
           size="lg"
         >

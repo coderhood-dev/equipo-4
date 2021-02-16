@@ -1,4 +1,4 @@
-import { Text, Image, Link, Heading } from '@chakra-ui/react';
+import { Text, Image, Link, Heading, Flex } from '@chakra-ui/react';
 import React from 'react';
 import { useQuery } from 'react-query';
 import DOMPurify from 'dompurify';
@@ -36,16 +36,50 @@ function ItemRecipe() {
   }
   return (
     <>
-      <Heading>{data.title}</Heading>
-
-      <Image src={data.image} alt={data.title} fit="cover" />
-      <Heading mb={4}>Summary</Heading>
+      <Heading
+        textAlign="center"
+        color="#b62a07"
+        m="10px 0px 30px 0px"
+        borderBottom="2px solid #b62a07"
+        borderTop="2px solid #b62a07"
+      >
+        {data.title}
+      </Heading>
+      <Flex alignItems="center" justifyContent="center">
+        <Image
+          borderRadius="20px"
+          boxShadow="1px 1px 8px 1px black"
+          m="10px"
+          src={data.image}
+          alt={data.title}
+          fit="cover"
+        />
+      </Flex>
+      <Heading
+        mb={4}
+        textAlign="center"
+        color="#b62a07"
+        m="10px 0px 30px 0px"
+        borderBottom="2px solid #b62a07"
+        borderTop="2px solid #b62a07"
+      >
+        Summary
+      </Heading>
       <Text
         dangerouslySetInnerHTML={{
           __html: DOMPurify.sanitize(data.summary),
         }}
       />
-      <Heading mb={4}>Instructions</Heading>
+      <Heading
+        mb={4}
+        textAlign="center"
+        color="#b62a07"
+        m="10px 0px 30px 0px"
+        borderBottom="2px solid #b62a07"
+        borderTop="2px solid #b62a07"
+      >
+        Instructions
+      </Heading>
       {data.instructions ? (
         <Text
           dangerouslySetInnerHTML={{
