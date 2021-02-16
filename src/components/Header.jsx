@@ -13,8 +13,8 @@ import {
 
 const Header = ({ pagename }) => (
   <Flex
-    bg="#065666"
-    color="#C4F1F9"
+    bg="#b62a07"
+    color="white"
     h="4rem"
     pl="4rem"
     pr="4rem"
@@ -27,9 +27,9 @@ const Header = ({ pagename }) => (
       <Flex ml="2rem">
         <MenuButton
           as={Button}
-          color="#C4F1F9"
-          _hover={{ bg: '#0987A0' }}
-          _expanded={{ bg: '#0987A0' }}
+          color="#ffffff"
+          _hover={{ bg: '#6e1a05' }}
+          _expanded={{ bg: '#b62a07' }}
           variant="ghost"
           w="2rem"
           borderRadius="8px"
@@ -37,15 +37,15 @@ const Header = ({ pagename }) => (
         >
           Menu
         </MenuButton>
-        <MenuList bg="#065666" _expanded={{ bg: '#0987A0' }}>
-          <Link to="/">
-            <MenuItem _hover={{ bg: '#0987A0' }}>Home</MenuItem>
+        <MenuList bg="#b62a07" _expanded={{ bg: '##b62a07' }}>
+          <Link to="/" _hover={{ bg: '#6e1a05' }}>
+            <MenuItem _hover={{ bg: '#6e1a05' }}>Home</MenuItem>
           </Link>
           <Link to="/about">
-            <MenuItem _hover={{ bg: '#0987A0' }}>About</MenuItem>
+            <MenuItem _hover={{ bg: '#6e1a05' }}>About</MenuItem>
           </Link>
           <Link to="/profile">
-            <MenuItem _hover={{ bg: '#0987A0' }}>Profile</MenuItem>
+            <MenuItem _hover={{ bg: '#6e1a05' }}>Profile</MenuItem>
           </Link>
         </MenuList>
       </Flex>
