@@ -82,6 +82,7 @@ function ItemRecipe() {
       </Heading>
       {data.instructions ? (
         <Text
+          ml={4}
           dangerouslySetInnerHTML={{
             __html: DOMPurify.sanitize(data.instructions),
           }}

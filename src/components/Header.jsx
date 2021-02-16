@@ -20,7 +20,7 @@ const Header = ({ pagename }) => (
     pl="4rem"
     pr="4rem"
     w="100%"
-    justify="space-between"
+    justify="flex-start"
     alignItems="center"
   >
     <Heading as="h1">{pagename}</Heading>
@@ -34,14 +34,17 @@ const Header = ({ pagename }) => (
           _expanded={{ bg: '#b62a07' }}
           variant="ghost"
           w="6rem"
+          _focus={{ border: 'none' }}
           borderRadius="8px"
           size="lg"
         >
           Menu
         </MenuButton>
         <MenuList bg="#b62a07" _expanded={{ bg: '##b62a07' }}>
-          <Link to="/" _hover={{ bg: '#6e1a05' }}>
-            <MenuItem _hover={{ bg: '#6e1a05' }}>Home</MenuItem>
+          <Link to="/" _hover={{ bg: '#6e1a05' }} _focus={{ border: 'none,' }}>
+            <MenuItem _hover={{ bg: '#6e1a05' }} _focus={{ border: 'none,' }}>
+              Home
+            </MenuItem>
           </Link>
           <Link to="/about">
             <MenuItem _hover={{ bg: '#6e1a05' }}>About</MenuItem>

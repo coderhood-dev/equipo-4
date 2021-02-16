@@ -26,10 +26,24 @@ function RangesInput({ list, category, userQuery, handleNumberChange }) {
           >
             <FormLabel>{label}</FormLabel>
             <NumberInput defaultValue={userQuery[id] || null}>
-              <NumberInputField />
+              <NumberInputField _focus={{ border: '3px solid #6e1a05' }} />
               <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
+                <NumberIncrementStepper
+                  border="none"
+                  _hover={{
+                    cursor: 'pointer',
+                    bg: '#6e1a05',
+                    borderRadius: '10px',
+                  }}
+                />
+                <NumberDecrementStepper
+                  border="none"
+                  _hover={{
+                    cursor: 'pointer',
+                    bg: '#6e1a05',
+                    borderRadius: '10px',
+                  }}
+                />
               </NumberInputStepper>
             </NumberInput>
           </FormControl>

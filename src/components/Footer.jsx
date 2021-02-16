@@ -8,6 +8,7 @@ const Footer = () => (
     color="#f8f1f1"
     fontWeight="bold"
     direction="row"
+    mt="2rem"
     px="10rem"
     py="2rem"
     justify="space-around"
