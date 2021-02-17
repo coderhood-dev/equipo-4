@@ -1,5 +1,7 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Box, SimpleGrid, Button, Text, Flex, Spinner } from '@chakra-ui/react';
+/* eslint-disable no-unused-vars */
+
 import { useInfiniteQuery } from 'react-query';
 
 import CardItem from './CardItem';
@@ -11,8 +13,6 @@ function SearchResults({ query }) {
     `${process.env.REACT_APP_SEARCH_URL + query}&apiKey=${
       process.env.REACT_APP_KEY
     }&number=${itemsPerQuery}&offset=${offset}`;
-
-  const loadMoreButtonRef = React.useRef();
 
   const getParams = (lastPage) =>
     lastPage.totalResults - lastPage.offset > itemsPerQuery
@@ -40,13 +40,22 @@ function SearchResults({ query }) {
     }
   );
 
+  const [ButtonRef, setButtonRef] = useState();
+
+  // Sets the target for useInterceptionObserver
+  const observedButton = useCallback((node) => {
+    if (node !== null) {
+      setButtonRef(node);
+    }
+  }, []);
+
   useIntersectionObserver({
-    target: loadMoreButtonRef,
+    target: ButtonRef,
     onIntersect: useCallback(fetchNextPage, [getParams, fetchNextPage]),
     enabled: hasNextPage,
   });
 
-  function statusButton() {
+  function buttonStatus() {
     if (isFetchingNextPage) {
       return <Text>Loading more...</Text>;
     }
@@ -103,11 +112,12 @@ function SearchResults({ query }) {
           )}
       </SimpleGrid>
       <Button
-        ref={loadMoreButtonRef}
+        ref={observedButton}
         onClick={() => fetchNextPage()}
         disabled={!hasNextPage || isFetchingNextPage}
+        on
       >
-        {statusButton()}
+        {buttonStatus()}
       </Button>
     </Box>
   );

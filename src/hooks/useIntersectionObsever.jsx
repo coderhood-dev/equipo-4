@@ -18,7 +18,7 @@ export default function useIntersectionObserver({
       (entries) =>
         entries.forEach((entry) => entry.isIntersecting && onIntersect()),
       {
-        root: root && root.current,
+        root,
         rootMargin,
         threshold,
       }
@@ -27,7 +27,8 @@ export default function useIntersectionObserver({
     // target is a useRef object (root if specified, must be a useRef object as well),
     // the actual DOM element watched is target.current
     // so if there is a target, el returns the DOM element, if not, returns undefined
-    const el = target && target.current;
+    console.log('target', target);
+    const el = target;
 
     // if there is no target, this hook does nothing
     if (!el) {
