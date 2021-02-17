@@ -1,4 +1,4 @@
-import { Text, Image, Link, Heading, Flex } from '@chakra-ui/react';
+import { Text, Image, Link, Heading, Flex, Spinner } from '@chakra-ui/react';
 import React from 'react';
 import { useQuery } from 'react-query';
 import DOMPurify from 'dompurify';
@@ -29,10 +29,39 @@ function ItemRecipe() {
     }
   );
 
-  if (isLoading) return 'Loading...';
+  if (isLoading)
+    return (
+      <Flex alignItems="center" justifyContent="center" flexDirection="column">
+        <Text
+          mt="25px"
+          mb="25px"
+          color="#b62a07"
+          fontSize="20px"
+          fontWeight="bold"
+        >
+          Loading...
+        </Text>
+        <Spinner color="#b62a07" size="xl" />
+      </Flex>
+    );
 
   if (error) {
-    return `An error has occurred: ${error.message}`;
+    return (
+      <Flex alignItems="center" justifyContent="center" flexDirection="column">
+        <Text
+          color="#0c0c0b"
+          fontSize="30px"
+          fontWeight="bold"
+          mt="25px"
+          p="10px"
+          bg="#ffee00"
+          borderRadius="10px"
+          border="3px solid black"
+        >
+          An error has occurred: {error.message}
+        </Text>
+      </Flex>
+    );
   }
   return (
     <>

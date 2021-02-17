@@ -16,7 +16,7 @@ function NutritionalTable({ data }) {
   } = data;
 
   return (
-    <Table variant="simple" size="sm" bg="#b62a07" color="white">
+    <Table variant="simple" size="sm" bg="#a3371c" color="white">
       <TableCaption
         placement="top"
         fontSize="xl"

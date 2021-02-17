@@ -55,7 +55,7 @@ function SearchResults({ query }) {
           borderRadius="10px"
           border="3px solid black"
         >
-          {`An error has occurred: ${error.message}`}
+          An error has occurred: {error.message}
         </Text>
       </Flex>
     );
