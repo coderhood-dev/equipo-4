@@ -5,7 +5,7 @@ import CardItem from './CardItem';
 
 function CardList({ items }) {
   return (
-    <SimpleGrid minChildWidth="380px" spacing="5" alignContent="center">
+    <SimpleGrid minChildWidth="320px" spacing="5" alignContent="center">
       {items &&
         items.map((item) => {
           return <CardItem galleryArray={items} item={item} key={item.id} />;
