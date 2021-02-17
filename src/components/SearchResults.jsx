@@ -1,8 +1,9 @@
 import { Box, SimpleGrid, Button, Text } from '@chakra-ui/react';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useInfiniteQuery } from 'react-query';
 
 import CardItem from './CardItem';
+import useIntersectionObserver from '../hooks/useIntersectionObsever';
 
 function SearchResults({ query }) {
   const itemsPerQuery = 50;
@@ -38,6 +39,12 @@ function SearchResults({ query }) {
       getNextPageParam: (lastPage) => getParams(lastPage),
     }
   );
+
+  useIntersectionObserver({
+    target: loadMoreButtonRef,
+    onIntersect: useCallback(fetchNextPage, [getParams, fetchNextPage]),
+    enabled: hasNextPage,
+  });
 
   function statusButton() {
     if (isFetchingNextPage) {
