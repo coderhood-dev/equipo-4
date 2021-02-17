@@ -1,30 +1,60 @@
-import { Box } from '@chakra-ui/react';
-import React from 'react';
-import { useQuery } from 'react-query';
+import { Box, SimpleGrid, Button, Text } from '@chakra-ui/react';
+import React, { useCallback } from 'react';
+import { useInfiniteQuery } from 'react-query';
 
-import CardList from './CardList';
+import CardItem from './CardItem';
+import useIntersectionObserver from '../hooks/useIntersectionObsever';
 
 function SearchResults({ query }) {
-  const queryURL = `${process.env.REACT_APP_SEARCH_URL + query}&apiKey=${
-    process.env.REACT_APP_KEY
-  }`;
+  const itemsPerQuery = 50;
+  const queryURL = (offset) =>
+    `${process.env.REACT_APP_SEARCH_URL + query}&apiKey=${
+      process.env.REACT_APP_KEY
+    }&number=${itemsPerQuery}&offset=${offset}`;
 
-  const { isLoading, error, data } = useQuery(
-    ['foodData', queryURL],
-    async () => {
-      const response = await fetch(queryURL);
+  const loadMoreButtonRef = React.useRef();
+
+  const getParams = (lastPage) =>
+    lastPage.totalResults - lastPage.offset > itemsPerQuery
+      ? lastPage.offset + itemsPerQuery
+      : false;
+
+  const {
+    isLoading,
+    error,
+    data,
+    isFetchingNextPage,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteQuery(
+    ['foodData', queryURL(0)],
+    async ({ pageParam = 0 }) => {
+      const response = await fetch(queryURL(pageParam));
       if (response.ok) {
         return response.json();
       }
       throw Error(`code ${response.status}`);
     },
     {
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      staleTime: 3600000,
-      cacheTime: 3600000,
+      getNextPageParam: (lastPage) => getParams(lastPage),
     }
   );
+
+  useIntersectionObserver({
+    target: loadMoreButtonRef,
+    onIntersect: useCallback(fetchNextPage, [getParams, fetchNextPage]),
+    enabled: hasNextPage,
+  });
+
+  function statusButton() {
+    if (isFetchingNextPage) {
+      return <Text>Loading more...</Text>;
+    }
+    if (hasNextPage) {
+      return <Text>Load Newer</Text>;
+    }
+    return <Text>Nothing more to load</Text>;
+  }
 
   if (isLoading) return 'Loading...';
 
@@ -33,7 +63,23 @@ function SearchResults({ query }) {
   }
   return (
     <Box>
-      <CardList items={data.results} />
+      <SimpleGrid minChildWidth="320px" spacing="5" alignContent="center">
+        {data &&
+          data.pages.map((page) =>
+            page.results.map((item) => {
+              return (
+                <CardItem pagesArray={data.pages} item={item} key={item.id} />
+              );
+            })
+          )}
+      </SimpleGrid>
+      <Button
+        ref={loadMoreButtonRef}
+        onClick={() => fetchNextPage()}
+        disabled={!hasNextPage || isFetchingNextPage}
+      >
+        {statusButton()}
+      </Button>
     </Box>
   );
 }

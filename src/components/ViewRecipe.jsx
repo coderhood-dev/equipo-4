@@ -21,9 +21,11 @@ function ViewRecipe() {
   useEffect(onOpen, [onOpen]);
 
   const { state = {} } = location;
-  const { modal, background = {}, galleryArray = [], item = {} } = state;
+  const { modal, background = {}, pagesArray = [], item = {} } = state;
 
   const { pathname, search } = background;
+
+  const galleryArray = pagesArray.map((page) => page.results).flat();
 
   const currentItemIndex = galleryArray.indexOf(item);
   const maxIndex = galleryArray.length - 1;
@@ -67,7 +69,7 @@ function ViewRecipe() {
                     state: {
                       modal,
                       background,
-                      galleryArray,
+                      pagesArray,
                       item: prevItem,
                     },
                   }}
@@ -82,7 +84,7 @@ function ViewRecipe() {
                     state: {
                       modal,
                       background,
-                      galleryArray,
+                      pagesArray,
                       item: nextItem,
                     },
                   }}
