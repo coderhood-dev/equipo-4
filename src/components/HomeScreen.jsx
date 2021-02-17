@@ -22,10 +22,12 @@ function HomeScreen() {
   ];
   return (
     <Box>
-      <Tabs isFitted isLazy variant="enclosed">
-        <TabList mb="1em">
+      <Tabs isFitted isLazy variant="enclosed" colorScheme="red">
+        <TabList mb="1em" color="#b62a07">
           {tabList.map((item) => (
-            <Tab key={item.tabID}>{item.tabTitle}</Tab>
+            <Tab key={item.tabID} _selected={{ border: '3px solid #b62a07' }}>
+              {item.tabTitle}
+            </Tab>
           ))}
         </TabList>
         <TabPanels>

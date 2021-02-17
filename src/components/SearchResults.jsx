@@ -1,6 +1,6 @@
-import { Box } from '@chakra-ui/react';
 import React from 'react';
 import { useQuery } from 'react-query';
+import { Text, Flex, Box, Spinner } from '@chakra-ui/react';
 
 import CardList from './CardList';
 
@@ -26,10 +26,39 @@ function SearchResults({ query }) {
     }
   );
 
-  if (isLoading) return 'Loading...';
+  if (isLoading)
+    return (
+      <Flex alignItems="center" justifyContent="center" flexDirection="column">
+        <Text
+          mt="25px"
+          mb="25px"
+          color="#b62a07"
+          fontSize="30px"
+          fontWeight="bold"
+        >
+          Loading...
+        </Text>
+        <Spinner color="#b62a07" size="xl" />
+      </Flex>
+    );
 
   if (error) {
-    return `An error has occurred: ${error.message}`;
+    return (
+      <Flex alignItems="center" justifyContent="center" flexDirection="column">
+        <Text
+          color="#0c0c0b"
+          fontSize="30px"
+          fontWeight="bold"
+          mt="25px"
+          p="10px"
+          bg="#ffee00"
+          borderRadius="10px"
+          border="3px solid black"
+        >
+          {`An error has occurred: ${error.message}`}
+        </Text>
+      </Flex>
+    );
   }
   return (
     <Box>

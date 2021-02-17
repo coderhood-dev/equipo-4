@@ -55,7 +55,15 @@ function ViewRecipe() {
         >
           <ModalOverlay />
           <ModalContent>
-            <ModalCloseButton />
+            <ModalCloseButton
+              bg="#b62a07"
+              m="20px"
+              boxSize="50px"
+              border="none"
+              color="white"
+              boxShadow="1px 1px 10px  black"
+              _hover={{ bg: '#6e1a05' }}
+            />
             <ModalBody>
               <ItemRecipe />
             </ModalBody>
@@ -72,7 +80,17 @@ function ViewRecipe() {
                     },
                   }}
                 >
-                  <Button>Prev</Button>
+                  <Button
+                    bg="#b62a07"
+                    color="white"
+                    _hover={{
+                      bg: '#6e1a05',
+                      boxShadow: '1px 1px 10px black',
+                      transitionDuration: '0.5s',
+                    }}
+                  >
+                    Prev
+                  </Button>
                 </Link>
               )}
               {nextItem && (
@@ -87,14 +105,45 @@ function ViewRecipe() {
                     },
                   }}
                 >
-                  <Button>Next</Button>
+                  <Button
+                    bg="#b62a07"
+                    color="white"
+                    ml={3}
+                    _hover={{
+                      bg: '#6e1a05',
+                      boxShadow: '1px 1px 10px black',
+                      transitionDuration: '0.5s',
+                    }}
+                  >
+                    Next
+                  </Button>
                 </Link>
               )}
 
-              <Button colorScheme="blue" mr={3} onClick={handleClose}>
+              <Button
+                bg="#b62a07"
+                color="white"
+                m={3}
+                onClick={handleClose}
+                _hover={{
+                  bg: '#6e1a05',
+                  boxShadow: '1px 1px 10px black',
+                  transitionDuration: '0.5s',
+                }}
+              >
                 Close
               </Button>
-              <Button>Save</Button>
+              <Button
+                color="#851f05"
+                _hover={{
+                  bg: '#6e1a05',
+                  color: 'white',
+                  boxShadow: '1px 1px 10px black',
+                  transitionDuration: '0.5s',
+                }}
+              >
+                Save
+              </Button>
             </ModalFooter>
           </ModalContent>
         </Modal>

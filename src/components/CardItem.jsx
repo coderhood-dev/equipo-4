@@ -20,16 +20,36 @@ function CardItem({ item, galleryArray }) {
         <Flex
           id={item.id}
           borderRadius="lg"
-          background="gray.200"
+          background="#b62a07"
           overflow="hidden"
+          h="400px"
           padding="5"
           maxW="sm"
           direction="column"
           margin="auto"
+          boxShadow="1px 1px 4px 1px black"
         >
-          <Image src={item.image} alt={item.title} fit="cover" />
+          <Image
+            src={item.image}
+            alt={item.title}
+            fit="cover"
+            p="10px"
+            borderRadius="20px"
+            mb="10px"
+          />
           <Box>
-            <Text>{item.title}</Text>
+            <Text
+              color="white"
+              fontSize="lg"
+              textAlign="center"
+              fontWeight="bold"
+              mt="15px"
+              p="10px"
+              borderTop="1px solid white"
+              borderBottom="1px solid white"
+            >
+              {item.title}
+            </Text>
           </Box>
         </Flex>
       </Link>

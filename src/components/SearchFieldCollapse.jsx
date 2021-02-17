@@ -79,21 +79,45 @@ function SearchFieldCollapse({ userQueryData }) {
         <Box>
           <InputGroup size="md">
             <Input
+              m="1rem"
               pr="4.5rem"
+              fontWeight="bold"
+              color="#b62a07"
+              _focus={{
+                border: '3px solid #b62a07',
+                boxShadow: '1px 1px 8px black',
+              }}
               placeholder="What do you wanna eat?"
               id="query"
               value={userQuery.query}
               onChange={handleStringChange}
             />
-            <InputRightElement width="">
+
+            <InputRightElement m="1rem 2rem 0 0" width="">
               <HStack>
                 <IconButton
                   aria-label="Search"
                   icon={<SearchIcon />}
                   onClick={() => SearchQuery()}
                   size="sm"
+                  mr="1rem"
+                  bg="#b62a07"
+                  color="white"
+                  _hover={{
+                    bg: '#6e1a05',
+                  }}
+                  _focus={{ border: 'none' }}
                 />
-                <Button size="sm" onClick={onToggle}>
+                <Button
+                  size="sm"
+                  onClick={onToggle}
+                  bg="#b62a07"
+                  color="white"
+                  _hover={{
+                    bg: '#6e1a05',
+                  }}
+                  _focus={{ border: 'none' }}
+                >
                   {isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
                 </Button>
               </HStack>
@@ -106,8 +130,9 @@ function SearchFieldCollapse({ userQueryData }) {
             <Box
               p="40px"
               color="white"
-              mt="4"
-              bg="teal.500"
+              fontWeight="bold"
+              m="1rem"
+              bg="#b62a07"
               rounded="md"
               shadow="md"
             >
