@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { Box, SimpleGrid, Button, Text } from '@chakra-ui/react';
 import React, { useCallback, useState } from 'react';
 import { useInfiniteQuery } from 'react-query';
@@ -42,6 +41,8 @@ function SearchResults({ query }) {
   const [ButtonRef, setButtonRef] = useState();
 
   // Sets the target for useInterceptionObserver
+  // the ref prop calls this function when the component is mounted
+  // instead of on a rerender as useRef does
   const observedButton = useCallback((node) => {
     if (node !== null) {
       setButtonRef(node);
