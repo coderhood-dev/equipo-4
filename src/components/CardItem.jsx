@@ -28,7 +28,6 @@ function CardItem({ item, galleryArray }) {
           direction="column"
           margin="auto"
           boxShadow="1px 1px 4px 1px black"
-          _hover={{}}
         >
           <Image
             src={item.image}
