@@ -8,11 +8,14 @@ export default function useIntersectionObserver({
   rootMargin = '0px',
   enabled = true,
 }) {
-  // Target must be set with a callback like this, useRef kind of works, after the first render, this always works.
+  // // Target must be set with a callback like this, useRef kind of works, after the first render, this always works.
 
   // const [ButtonRef, setButtonRef] = useState();
 
   // // Sets the target for useInterceptionObserver
+  // // the ref prop calls this function when the component is mounted
+  // // instead of on a rerender as useRef does
+
   // const observedButton = useCallback((node) => {
   //   if (node !== null) {
   //     setButtonRef(node);
@@ -22,7 +25,7 @@ export default function useIntersectionObserver({
   React.useEffect(() => {
     // do nothing if not enabled (ie: when there's nothing more to load)
     if (!enabled) {
-      return;
+      return undefined;
     }
     // create new observer, and for each observed element, if isIntersecting is true, execute onIntercect function
     const observer = new IntersectionObserver(
@@ -37,12 +40,11 @@ export default function useIntersectionObserver({
 
     // if there is no target, this hook does nothing
     if (!target) {
-      return;
+      return undefined;
     }
 
     observer.observe(target);
     // cleanup function
-    // eslint-disable-next-line consistent-return
     return () => observer.unobserve(target);
   }, [enabled, onIntersect, root, rootMargin, target, threshold]);
 }
