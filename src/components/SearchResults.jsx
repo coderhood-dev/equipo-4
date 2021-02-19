@@ -40,19 +40,11 @@ function SearchResults({ query }) {
     }
   );
 
-  const [ButtonRef, setButtonRef] = useState();
-
-  // Sets the target for useInterceptionObserver
-  // the ref prop calls this function when the component is mounted
-  // instead of on a rerender as useRef does
-  const observedButton = useCallback((node) => {
-    if (node !== null) {
-      setButtonRef(node);
-    }
-  }, []);
+  // could have been useRef, but the ref won't get updated with the DOM element until a rerender
+  const [buttonRef, setButtonRef] = useState();
 
   useIntersectionObserver({
-    target: ButtonRef,
+    target: buttonRef,
     onIntersect: useCallback(fetchNextPage, [getParams, fetchNextPage]),
     enabled: hasNextPage,
   });
@@ -114,10 +106,9 @@ function SearchResults({ query }) {
           )}
       </SimpleGrid>
       <Button
-        ref={observedButton}
+        ref={(node) => setButtonRef(node)}
         onClick={() => fetchNextPage()}
         disabled={!hasNextPage || isFetchingNextPage}
-        on
       >
         {buttonStatus()}
       </Button>
