@@ -1,7 +1,5 @@
 import React, { useCallback, useState } from 'react';
 import { Box, SimpleGrid, Button, Text, Flex, Spinner } from '@chakra-ui/react';
-/* eslint-disable no-unused-vars */
-
 import { useInfiniteQuery } from 'react-query';
 
 import CardItem from './CardItem';
@@ -40,7 +38,7 @@ function SearchResults({ query }) {
     }
   );
 
-  // could have been useRef, but the ref won't get updated with the DOM element until a rerender
+  // could have used useRef, but the ref won't get updated with the DOM element until a rerender
   const [buttonRef, setButtonRef] = useState();
 
   useIntersectionObserver({
@@ -95,7 +93,7 @@ function SearchResults({ query }) {
   }
   return (
     <Box>
-      <SimpleGrid minChildWidth="320px" spacing="5" alignContent="center">
+      <SimpleGrid minChildWidth="280px" spacing="5" alignContent="center">
         {data &&
           data.pages.map((page) =>
             page.results.map((item) => {
