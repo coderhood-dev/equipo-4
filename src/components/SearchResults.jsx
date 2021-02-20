@@ -1,5 +1,14 @@
+/* eslint-disable no-unused-vars */
 import React, { useCallback, useState } from 'react';
-import { Box, SimpleGrid, Button, Text, Flex, Spinner } from '@chakra-ui/react';
+import {
+  Box,
+  SimpleGrid,
+  Button,
+  Text,
+  Flex,
+  Spinner,
+  Center,
+} from '@chakra-ui/react';
 import { useInfiniteQuery } from 'react-query';
 
 import CardItem from './CardItem';
@@ -41,21 +50,11 @@ function SearchResults({ query }) {
   // could have used useRef, but the ref won't get updated with the DOM element until a rerender
   const [buttonRef, setButtonRef] = useState();
 
-  useIntersectionObserver({
-    target: buttonRef,
-    onIntersect: useCallback(fetchNextPage, [getParams, fetchNextPage]),
-    enabled: hasNextPage,
-  });
-
-  function buttonStatus() {
-    if (isFetchingNextPage) {
-      return <Text>Loading more...</Text>;
-    }
-    if (hasNextPage) {
-      return <Text>Load Newer</Text>;
-    }
-    return <Text>Nothing more to load</Text>;
-  }
+  // useIntersectionObserver({
+  //   target: buttonRef,
+  //   onIntersect: useCallback(fetchNextPage, [getParams, fetchNextPage]),
+  //   enabled: hasNextPage,
+  // });
 
   if (isLoading)
     return (
@@ -103,13 +102,28 @@ function SearchResults({ query }) {
             })
           )}
       </SimpleGrid>
-      <Button
-        ref={(node) => setButtonRef(node)}
-        onClick={() => fetchNextPage()}
-        disabled={!hasNextPage || isFetchingNextPage}
-      >
-        {buttonStatus()}
-      </Button>
+
+      <Center p="5">
+        <Button
+          ref={(node) => setButtonRef(node)}
+          onClick={() => fetchNextPage()}
+          isLoading={isFetchingNextPage}
+          loadingText="Loading more..."
+          bg="#b62a07"
+          color="white"
+          _hover={{
+            bg: '#6e1a05',
+            boxShadow: '1px 1px 10px black',
+            transitionDuration: '0.5s',
+          }}
+        >
+          {hasNextPage ? (
+            <Text>Load Newer</Text>
+          ) : (
+            <Text>Nothing more to Load</Text>
+          )}
+        </Button>
+      </Center>
     </Box>
   );
 }

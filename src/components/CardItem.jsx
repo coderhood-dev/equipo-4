@@ -22,10 +22,11 @@ function CardItem({ item, pagesArray }) {
           borderRadius="lg"
           background="#b62a07"
           overflow="hidden"
-          h="400px"
-          padding="5"
+          padding="4"
           maxW="sm"
+          height="100%"
           direction="column"
+          justifyContent="space-between"
           margin="auto"
           boxShadow="1px 1px 4px 1px black"
         >
@@ -33,10 +34,11 @@ function CardItem({ item, pagesArray }) {
             src={item.image}
             alt={item.title}
             fit="cover"
-            p="10px"
-            borderRadius="20px"
-            mb="10px"
+            p="0px"
+            borderRadius="lg"
+            height="100%"
           />
+
           <Box>
             <Text
               color="white"
@@ -47,6 +49,7 @@ function CardItem({ item, pagesArray }) {
               p="10px"
               borderTop="1px solid white"
               borderBottom="1px solid white"
+              isTruncated
             >
               {item.title}
             </Text>
