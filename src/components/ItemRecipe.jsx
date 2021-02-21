@@ -20,12 +20,6 @@ function ItemRecipe() {
         return response.json();
       }
       throw Error(`code ${response.status}`);
-    },
-    {
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      staleTime: 3600000,
-      cacheTime: 3600000,
     }
   );
 
@@ -89,7 +83,7 @@ function ItemRecipe() {
         />
       ) : (
         <Text>
-          Read the detailed instructions on
+          Read the detailed instructions on{' '}
           <Link href={`${data.sourceUrl}`}>{`${data.sourceName}`}</Link>
         </Text>
       )}

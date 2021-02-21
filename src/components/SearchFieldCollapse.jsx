@@ -8,7 +8,7 @@ import {
   useDisclosure,
   Collapse,
   Button,
-  HStack,
+  ButtonGroup,
 } from '@chakra-ui/react';
 import { SearchIcon, ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 import { useHistory } from 'react-router-dom';
@@ -65,7 +65,8 @@ function SearchFieldCollapse({ userQueryData }) {
       });
     };
 
-    const SearchQuery = () => {
+    const SearchQuery = (e) => {
+      e.preventDefault();
       const query = queryString.stringify(userQuery, {
         arrayFormat: 'comma',
         skipEmptyString: true,
@@ -75,11 +76,11 @@ function SearchFieldCollapse({ userQueryData }) {
     };
 
     return (
-      <Box>
-        <Box>
+      <Box as="form">
+        <Box m="1rem">
           <InputGroup size="md">
             <Input
-              m="1rem"
+              m="0rem"
               pr="4.5rem"
               fontWeight="bold"
               color="#b62a07"
@@ -93,20 +94,21 @@ function SearchFieldCollapse({ userQueryData }) {
               onChange={handleStringChange}
             />
 
-            <InputRightElement m="1rem 2rem 0 0" width="">
-              <HStack>
+            <InputRightElement w="" p="0 1%">
+              <ButtonGroup isAttached>
                 <IconButton
                   aria-label="Search"
                   icon={<SearchIcon />}
-                  onClick={() => SearchQuery()}
+                  onClick={(e) => SearchQuery(e)}
                   size="sm"
-                  mr="1rem"
                   bg="#b62a07"
+                  mr="1px"
                   color="white"
                   _hover={{
                     bg: '#6e1a05',
                   }}
                   _focus={{ border: 'none' }}
+                  type="submit"
                 />
                 <Button
                   size="sm"
@@ -120,7 +122,7 @@ function SearchFieldCollapse({ userQueryData }) {
                 >
                   {isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
                 </Button>
-              </HStack>
+              </ButtonGroup>
             </InputRightElement>
           </InputGroup>
         </Box>

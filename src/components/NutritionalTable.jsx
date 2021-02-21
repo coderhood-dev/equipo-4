@@ -41,7 +41,7 @@ function NutritionalTable({ data }) {
           <Tr key={nutrient.name}>
             <Td>{nutrient.name}</Td>
             <Td isNumeric>{`${nutrient.amount} ${nutrient.unit}`}</Td>
-            <Td isNumeric>{nutrient.percentOfDailyNeeds}</Td>
+            <Td isNumeric>{Math.round(nutrient.percentOfDailyNeeds)}</Td>
           </Tr>
         ))}
       </Tbody>

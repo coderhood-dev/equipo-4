@@ -1,30 +1,59 @@
-import React from 'react';
-import { useQuery } from 'react-query';
-import { Text, Flex, Box, Spinner } from '@chakra-ui/react';
+import React, { useCallback, useState } from 'react';
+import {
+  Box,
+  SimpleGrid,
+  Button,
+  Text,
+  Flex,
+  Spinner,
+  Center,
+} from '@chakra-ui/react';
+import { useInfiniteQuery } from 'react-query';
 
-import CardList from './CardList';
+import CardItem from './CardItem';
+import useIntersectionObserver from '../hooks/useIntersectionObsever';
 
 function SearchResults({ query }) {
-  const queryURL = `${process.env.REACT_APP_SEARCH_URL + query}&apiKey=${
-    process.env.REACT_APP_KEY
-  }`;
+  const itemsPerQuery = 50;
+  const queryURL = (offset) =>
+    `${process.env.REACT_APP_SEARCH_URL + query}&apiKey=${
+      process.env.REACT_APP_KEY
+    }&number=${itemsPerQuery}&offset=${offset}`;
 
-  const { isLoading, error, data } = useQuery(
-    ['foodData', queryURL],
-    async () => {
-      const response = await fetch(queryURL);
+  const getParams = (lastPage) =>
+    lastPage.totalResults - lastPage.offset > itemsPerQuery
+      ? lastPage.offset + itemsPerQuery
+      : false;
+
+  const {
+    isLoading,
+    error,
+    data,
+    isFetchingNextPage,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteQuery(
+    ['foodData', queryURL(0)],
+    async ({ pageParam = 0 }) => {
+      const response = await fetch(queryURL(pageParam));
       if (response.ok) {
         return response.json();
       }
       throw Error(`code ${response.status}`);
     },
     {
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      staleTime: 3600000,
-      cacheTime: 3600000,
+      getNextPageParam: (lastPage) => getParams(lastPage),
     }
   );
+
+  // could have used useRef, but the ref won't get updated with the DOM element until a rerender
+  const [buttonRef, setButtonRef] = useState();
+
+  useIntersectionObserver({
+    target: buttonRef,
+    onIntersect: useCallback(fetchNextPage, [getParams, fetchNextPage]),
+    enabled: hasNextPage,
+  });
 
   if (isLoading)
     return (
@@ -62,7 +91,38 @@ function SearchResults({ query }) {
   }
   return (
     <Box>
-      <CardList items={data.results} />
+      <SimpleGrid minChildWidth="280px" spacing="5" alignContent="center">
+        {data &&
+          data.pages.map((page) =>
+            page.results.map((item) => {
+              return (
+                <CardItem pagesArray={data.pages} item={item} key={item.id} />
+              );
+            })
+          )}
+      </SimpleGrid>
+
+      <Center p="5">
+        <Button
+          ref={(node) => setButtonRef(node)}
+          onClick={() => fetchNextPage()}
+          isLoading={isFetchingNextPage}
+          loadingText="Loading more..."
+          bg="#b62a07"
+          color="white"
+          _hover={{
+            bg: '#6e1a05',
+            boxShadow: '1px 1px 10px black',
+            transitionDuration: '0.5s',
+          }}
+        >
+          {hasNextPage ? (
+            <Text>Load Newer</Text>
+          ) : (
+            <Text>Nothing more to Load</Text>
+          )}
+        </Button>
+      </Center>
     </Box>
   );
 }
