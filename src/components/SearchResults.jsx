@@ -50,11 +50,11 @@ function SearchResults({ query }) {
   // could have used useRef, but the ref won't get updated with the DOM element until a rerender
   const [buttonRef, setButtonRef] = useState();
 
-  // useIntersectionObserver({
-  //   target: buttonRef,
-  //   onIntersect: useCallback(fetchNextPage, [getParams, fetchNextPage]),
-  //   enabled: hasNextPage,
-  // });
+  useIntersectionObserver({
+    target: buttonRef,
+    onIntersect: useCallback(fetchNextPage, [getParams, fetchNextPage]),
+    enabled: hasNextPage,
+  });
 
   if (isLoading)
     return (
